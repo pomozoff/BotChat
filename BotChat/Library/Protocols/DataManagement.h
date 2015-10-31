@@ -18,7 +18,7 @@ typedef enum : NSUInteger {
     TableChangeUpdate = 4
 } TableChangeType;
 
-@protocol DataSource <NSObject>
+@protocol TableDataSource <NSObject>
 
 - (NSInteger)numberOfSections;
 - (NSInteger)numberOfItemsInSection:(NSInteger)section;
@@ -33,8 +33,9 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) NSBlockOperation *updateOperation;
 
 - (void)reloadData;
+- (void)reloadDataInSections:(NSIndexSet *)indexSet;
 - (void)willChangeContent;
-- (void)didChangeSectionatIndex:(NSUInteger)sectionIndex
+- (void)didChangeSectionAtIndex:(NSUInteger)sectionIndex
                   forChangeType:(TableChangeType)type;
 - (void)didChangeObject:(id)anObject
             atIndexPath:(NSIndexPath *)indexPath
@@ -50,9 +51,9 @@ typedef enum : NSUInteger {
 
 @end
 
-@protocol DataSourceDelegate <NSObject>
+@protocol TableDataSourceDelegate <NSObject>
 
-@property (strong, nonatomic) id <DataSource, DataPresenterDelegate> dataSource;
+@property (strong, nonatomic) id <TableDataSource, DataPresenterDelegate> tableDataSource;
 
 @end
 

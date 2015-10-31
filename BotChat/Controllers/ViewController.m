@@ -17,13 +17,6 @@ static NSString * const kCellReuseIdentifier = @"Chat Table Cell";
 
 @implementation ViewController
 
-#pragma mark - Properties
-
-- (void)setChatManager:(ChatManager *)chatManager {
-    _chatManager = chatManager;
-    [self reloadData];
-}
-
 #pragma mark - Lifecycle
 
 - (void)viewDidLoad {

@@ -13,14 +13,15 @@
 		26186BE21BE4CF1300DD40FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 26186BE11BE4CF1300DD40FA /* Assets.xcassets */; };
 		26186BE51BE4CF1300DD40FA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26186BE31BE4CF1300DD40FA /* LaunchScreen.storyboard */; };
 		26186BEF1BE4D25700DD40FA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26186BEE1BE4D25700DD40FA /* ViewController.m */; };
-		26186BF71BE4D3CC00DD40FA /* CoreDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 26186BF51BE4D3CC00DD40FA /* CoreDataStore.m */; };
 		26186BFF1BE4D60700DD40FA /* ChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 26186BFE1BE4D60700DD40FA /* ChatTableViewCell.m */; };
-		26186C021BE4D70200DD40FA /* ChatManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 26186C011BE4D70200DD40FA /* ChatManager.m */; };
-		26186C051BE4D7B000DD40FA /* ChatDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 26186C031BE4D7B000DD40FA /* ChatDataModel.xcdatamodeld */; };
-		26186C0A1BE4EA0F00DD40FA /* ChatMessage+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 26186C071BE4EA0F00DD40FA /* ChatMessage+CoreDataProperties.m */; };
-		26186C0B1BE4EA0F00DD40FA /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 26186C091BE4EA0F00DD40FA /* ChatMessage.m */; };
 		26186C161BE4EB8F00DD40FA /* BaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26186C111BE4EB8F00DD40FA /* BaseTableViewController.m */; };
 		26186C171BE4EB8F00DD40FA /* ErrorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 26186C141BE4EB8F00DD40FA /* ErrorHelper.m */; };
+		26186C2B1BE4F51000DD40FA /* ChatDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 26186C1D1BE4F51000DD40FA /* ChatDataModel.xcdatamodeld */; };
+		26186C2C1BE4F51000DD40FA /* ChatMessage+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 26186C201BE4F51000DD40FA /* ChatMessage+CoreDataProperties.m */; };
+		26186C2D1BE4F51000DD40FA /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 26186C221BE4F51000DD40FA /* ChatMessage.m */; };
+		26186C2E1BE4F51000DD40FA /* CoreDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 26186C261BE4F51000DD40FA /* CoreDataStore.m */; };
+		26186C2F1BE4F51000DD40FA /* ChatManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 26186C2A1BE4F51000DD40FA /* ChatManager.m */; };
+		26186C321BE4F52600DD40FA /* CoreDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 26186C311BE4F52600DD40FA /* CoreDataSource.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,24 +35,27 @@
 		26186BE61BE4CF1300DD40FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		26186BED1BE4D25700DD40FA /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		26186BEE1BE4D25700DD40FA /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		26186BF41BE4D3CC00DD40FA /* CoreDataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataStore.h; sourceTree = "<group>"; };
-		26186BF51BE4D3CC00DD40FA /* CoreDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataStore.m; sourceTree = "<group>"; };
-		26186BF61BE4D3CC00DD40FA /* DataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataStore.h; sourceTree = "<group>"; };
 		26186BFD1BE4D60700DD40FA /* ChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTableViewCell.h; sourceTree = "<group>"; };
 		26186BFE1BE4D60700DD40FA /* ChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTableViewCell.m; sourceTree = "<group>"; };
-		26186C001BE4D70200DD40FA /* ChatManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatManager.h; sourceTree = "<group>"; };
-		26186C011BE4D70200DD40FA /* ChatManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatManager.m; sourceTree = "<group>"; };
-		26186C041BE4D7B000DD40FA /* ChatDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ChatDataModel.xcdatamodel; sourceTree = "<group>"; };
-		26186C061BE4EA0F00DD40FA /* ChatMessage+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ChatMessage+CoreDataProperties.h"; sourceTree = "<group>"; };
-		26186C071BE4EA0F00DD40FA /* ChatMessage+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ChatMessage+CoreDataProperties.m"; sourceTree = "<group>"; };
-		26186C081BE4EA0F00DD40FA /* ChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessage.h; sourceTree = "<group>"; };
-		26186C091BE4EA0F00DD40FA /* ChatMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessage.m; sourceTree = "<group>"; };
 		26186C101BE4EB8F00DD40FA /* BaseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTableViewController.h; sourceTree = "<group>"; };
 		26186C111BE4EB8F00DD40FA /* BaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewController.m; sourceTree = "<group>"; };
 		26186C131BE4EB8F00DD40FA /* ErrorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ErrorHelper.h; sourceTree = "<group>"; };
 		26186C141BE4EB8F00DD40FA /* ErrorHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ErrorHelper.m; sourceTree = "<group>"; };
 		26186C191BE4ECCF00DD40FA /* DataManagement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManagement.h; sourceTree = "<group>"; };
 		26186C1A1BE4EEA600DD40FA /* ChatMessageWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessageWrapper.h; sourceTree = "<group>"; };
+		26186C1E1BE4F51000DD40FA /* ChatDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ChatDataModel.xcdatamodel; sourceTree = "<group>"; };
+		26186C1F1BE4F51000DD40FA /* ChatMessage+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ChatMessage+CoreDataProperties.h"; sourceTree = "<group>"; };
+		26186C201BE4F51000DD40FA /* ChatMessage+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ChatMessage+CoreDataProperties.m"; sourceTree = "<group>"; };
+		26186C211BE4F51000DD40FA /* ChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessage.h; sourceTree = "<group>"; };
+		26186C221BE4F51000DD40FA /* ChatMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessage.m; sourceTree = "<group>"; };
+		26186C251BE4F51000DD40FA /* CoreDataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataStore.h; sourceTree = "<group>"; };
+		26186C261BE4F51000DD40FA /* CoreDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataStore.m; sourceTree = "<group>"; };
+		26186C271BE4F51000DD40FA /* DataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataStore.h; sourceTree = "<group>"; };
+		26186C291BE4F51000DD40FA /* ChatManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatManager.h; sourceTree = "<group>"; };
+		26186C2A1BE4F51000DD40FA /* ChatManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatManager.m; sourceTree = "<group>"; };
+		26186C301BE4F52600DD40FA /* CoreDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataSource.h; sourceTree = "<group>"; };
+		26186C311BE4F52600DD40FA /* CoreDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataSource.m; sourceTree = "<group>"; };
+		26186C331BE4F9F600DD40FA /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,8 +90,7 @@
 			children = (
 				26186BFC1BE4D5F200DD40FA /* Views */,
 				26186BEC1BE4D25700DD40FA /* Controllers */,
-				26186BF01BE4D26500DD40FA /* Models */,
-				26186BF31BE4D3A600DD40FA /* Data */,
+				26186C1B1BE4F51000DD40FA /* Models */,
 				26186C0C1BE4EB8F00DD40FA /* Library */,
 				26186BF11BE4D27500DD40FA /* Application */,
 				26186BF21BE4D28000DD40FA /* Resources */,
@@ -102,15 +105,6 @@
 				26186BEE1BE4D25700DD40FA /* ViewController.m */,
 			);
 			path = Controllers;
-			sourceTree = "<group>";
-		};
-		26186BF01BE4D26500DD40FA /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				26186C001BE4D70200DD40FA /* ChatManager.h */,
-				26186C011BE4D70200DD40FA /* ChatManager.m */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		26186BF11BE4D27500DD40FA /* Application */ = {
@@ -132,21 +126,6 @@
 				26186BE31BE4CF1300DD40FA /* LaunchScreen.storyboard */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		26186BF31BE4D3A600DD40FA /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				26186BF61BE4D3CC00DD40FA /* DataStore.h */,
-				26186BF41BE4D3CC00DD40FA /* CoreDataStore.h */,
-				26186BF51BE4D3CC00DD40FA /* CoreDataStore.m */,
-				26186C031BE4D7B000DD40FA /* ChatDataModel.xcdatamodeld */,
-				26186C061BE4EA0F00DD40FA /* ChatMessage+CoreDataProperties.h */,
-				26186C071BE4EA0F00DD40FA /* ChatMessage+CoreDataProperties.m */,
-				26186C081BE4EA0F00DD40FA /* ChatMessage.h */,
-				26186C091BE4EA0F00DD40FA /* ChatMessage.m */,
-			);
-			path = Data;
 			sourceTree = "<group>";
 		};
 		26186BFC1BE4D5F200DD40FA /* Views */ = {
@@ -189,10 +168,62 @@
 		26186C181BE4ECCF00DD40FA /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				26186C331BE4F9F600DD40FA /* Common.h */,
 				26186C191BE4ECCF00DD40FA /* DataManagement.h */,
 				26186C1A1BE4EEA600DD40FA /* ChatMessageWrapper.h */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		26186C1B1BE4F51000DD40FA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				26186C1C1BE4F51000DD40FA /* Core Data */,
+				26186C231BE4F51000DD40FA /* Data Source */,
+				26186C241BE4F51000DD40FA /* Data Store */,
+				26186C281BE4F51000DD40FA /* Managers */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		26186C1C1BE4F51000DD40FA /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				26186C1D1BE4F51000DD40FA /* ChatDataModel.xcdatamodeld */,
+				26186C1F1BE4F51000DD40FA /* ChatMessage+CoreDataProperties.h */,
+				26186C201BE4F51000DD40FA /* ChatMessage+CoreDataProperties.m */,
+				26186C211BE4F51000DD40FA /* ChatMessage.h */,
+				26186C221BE4F51000DD40FA /* ChatMessage.m */,
+			);
+			path = "Core Data";
+			sourceTree = "<group>";
+		};
+		26186C231BE4F51000DD40FA /* Data Source */ = {
+			isa = PBXGroup;
+			children = (
+				26186C301BE4F52600DD40FA /* CoreDataSource.h */,
+				26186C311BE4F52600DD40FA /* CoreDataSource.m */,
+			);
+			path = "Data Source";
+			sourceTree = "<group>";
+		};
+		26186C241BE4F51000DD40FA /* Data Store */ = {
+			isa = PBXGroup;
+			children = (
+				26186C251BE4F51000DD40FA /* CoreDataStore.h */,
+				26186C261BE4F51000DD40FA /* CoreDataStore.m */,
+				26186C271BE4F51000DD40FA /* DataStore.h */,
+			);
+			path = "Data Store";
+			sourceTree = "<group>";
+		};
+		26186C281BE4F51000DD40FA /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				26186C291BE4F51000DD40FA /* ChatManager.h */,
+				26186C2A1BE4F51000DD40FA /* ChatManager.m */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -265,17 +296,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26186C2E1BE4F51000DD40FA /* CoreDataStore.m in Sources */,
 				26186BDA1BE4CF1300DD40FA /* AppDelegate.m in Sources */,
 				26186BEF1BE4D25700DD40FA /* ViewController.m in Sources */,
 				26186C171BE4EB8F00DD40FA /* ErrorHelper.m in Sources */,
-				26186C021BE4D70200DD40FA /* ChatManager.m in Sources */,
-				26186BF71BE4D3CC00DD40FA /* CoreDataStore.m in Sources */,
-				26186C051BE4D7B000DD40FA /* ChatDataModel.xcdatamodeld in Sources */,
+				26186C2D1BE4F51000DD40FA /* ChatMessage.m in Sources */,
+				26186C2B1BE4F51000DD40FA /* ChatDataModel.xcdatamodeld in Sources */,
+				26186C2F1BE4F51000DD40FA /* ChatManager.m in Sources */,
 				26186C161BE4EB8F00DD40FA /* BaseTableViewController.m in Sources */,
-				26186C0A1BE4EA0F00DD40FA /* ChatMessage+CoreDataProperties.m in Sources */,
 				26186BD71BE4CF1300DD40FA /* main.m in Sources */,
+				26186C2C1BE4F51000DD40FA /* ChatMessage+CoreDataProperties.m in Sources */,
 				26186BFF1BE4D60700DD40FA /* ChatTableViewCell.m in Sources */,
-				26186C0B1BE4EA0F00DD40FA /* ChatMessage.m in Sources */,
+				26186C321BE4F52600DD40FA /* CoreDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,12 +458,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		26186C031BE4D7B000DD40FA /* ChatDataModel.xcdatamodeld */ = {
+		26186C1D1BE4F51000DD40FA /* ChatDataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				26186C041BE4D7B000DD40FA /* ChatDataModel.xcdatamodel */,
+				26186C1E1BE4F51000DD40FA /* ChatDataModel.xcdatamodel */,
 			);
-			currentVersion = 26186C041BE4D7B000DD40FA /* ChatDataModel.xcdatamodel */;
+			currentVersion = 26186C1E1BE4F51000DD40FA /* ChatDataModel.xcdatamodel */;
 			path = ChatDataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

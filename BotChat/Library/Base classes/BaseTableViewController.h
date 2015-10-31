@@ -10,6 +10,12 @@
 
 #import "DataManagement.h"
 
-@interface BaseTableViewController : UITableViewController <DataPresenter>
+NS_ASSUME_NONNULL_BEGIN
+
+@interface BaseTableViewController : UIViewController <TableDataSourceDelegate, DataPresenter>
+
+@property (nonatomic, strong) UITableView *tableView;
 
 @end
+
+NS_ASSUME_NONNULL_END

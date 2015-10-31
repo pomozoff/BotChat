@@ -22,14 +22,15 @@ static NSString * const kCoreDataModelName = @"ChatDataModel";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     if ([self.window.rootViewController isKindOfClass:[ViewController class]]) {
-        ViewController *rootViewController = (ViewController *)self.window.rootViewController;
+        CoreDataSource *coreDataSource = [[CoreDataSource alloc] init];
         ChatManager *chatManager = [[ChatManager alloc] init];
+        chatManager.dataSourceDelegate = coreDataSource;
         chatManager.dataStore = [[CoreDataStore alloc] initWithModelName:kCoreDataModelName];
-        [chatManager.dataStore setupWithCompletion:^(BOOL succeeded, NSError * __nullable error) {
-            rootViewController.chatManager = chatManager;
-        }];
-    }
 
+        ViewController *rootViewController = (ViewController *)self.window.rootViewController;
+        rootViewController.tableDataSource = coreDataSource;
+        rootViewController.chatManager = chatManager;
+    }
     return YES;
 }
 - (void)applicationWillResignActive:(UIApplication *)application {

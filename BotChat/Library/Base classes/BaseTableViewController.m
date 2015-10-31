@@ -8,7 +8,7 @@
 
 #import "BaseTableViewController.h"
 
-@interface BaseTableViewController () <DataSourceDelegate>
+@interface BaseTableViewController ()
 
 @end
 
@@ -16,85 +16,76 @@
 
 #pragma mark - Properties
 
-@synthesize dataSource = _dataSource;
 @synthesize updateOperation = _updateOperation;
+@synthesize tableDataSource = _tableDataSource;
 
-#pragma mark - Lifecycle
+#pragma mark - Life cycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.dataSource.presenter = self;
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.tableDataSource.presenter = self;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - UITableViewDataSource
+#pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [self.dataSource numberOfSections];
+    return [self.tableDataSource numberOfSections];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.dataSource numberOfItemsInSection:section];
-}
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return [self.dataSource titleForHeaderInSection:section];
-}
-- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
-    return [self.dataSource sectionForSectionIndexTitle:title atIndex:index];
-}
-- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-    return [self.dataSource sectionIndexTitles];
+    return [self.tableDataSource numberOfItemsInSection:section];
 }
 
-#pragma mark - DataPresenter
+#pragma mark - Data presenter
 
 - (void)reloadData {
     [self.tableView reloadData];
 }
+- (void)reloadDataInSections:(NSIndexSet *)indexSet {
+    NSAssert([NSThread isMainThread], @"Not in main thread!");
+    [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+}
 - (void)willChangeContent {
+    NSAssert([NSThread isMainThread], @"Not in main thread!");
     [self.tableView beginUpdates];
     self.updateOperation = [[NSBlockOperation alloc] init];
     
-    __weak UITableView *weakTableView = self.tableView;
+    __weak __typeof(self) weakSelf = self;
     self.updateOperation.completionBlock = ^{
-        [weakTableView endUpdates];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf.tableView endUpdates];
+        });
     };
 }
-- (void)didChangeSectionatIndex:(NSUInteger)sectionIndex
+- (void)didChangeSectionAtIndex:(NSUInteger)sectionIndex
                   forChangeType:(TableChangeType)type
 {
-    __weak UITableView *weakTableView = self.tableView;
+    __weak __typeof(self) weakSelf = self;
     switch(type) {
         case TableChangeInsert: {
             [self.updateOperation addExecutionBlock:^{
-                [weakTableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+                [weakSelf.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             }];
             break;
         }
         case TableChangeDelete: {
             [self.updateOperation addExecutionBlock:^{
-                [weakTableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            }];
-            break;
-        }
-        case TableChangeUpdate: {
-            [self.updateOperation addExecutionBlock:^{
-                [weakTableView reloadSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+                [weakSelf.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             }];
             break;
         }
         case TableChangeMove: {
             [self.updateOperation addExecutionBlock:^{
-                [weakTableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-                [weakTableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+                [weakSelf.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+                [weakSelf.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            }];
+            break;
+        }
+        case TableChangeUpdate: {
+            [self.updateOperation addExecutionBlock:^{
+                [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             }];
             break;
         }
@@ -107,30 +98,31 @@
           forChangeType:(TableChangeType)type
            newIndexPath:(NSIndexPath *)newIndexPath
 {
-    __weak UITableView *weakTableView = self.tableView;
+    __weak __typeof(self) weakSelf = self;
     switch(type) {
         case TableChangeInsert: {
+            NSAssert(self.updateOperation, @"Update operation is nil!");
             [self.updateOperation addExecutionBlock:^{
-                [weakTableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+                [weakSelf.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             }];
             break;
         }
         case TableChangeDelete: {
             [self.updateOperation addExecutionBlock:^{
-                [weakTableView deleteRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            }];
-            break;
-        }
-        case TableChangeUpdate: {
-            [self.updateOperation addExecutionBlock:^{
-                [weakTableView reloadRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+                [weakSelf.tableView deleteRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             }];
             break;
         }
         case TableChangeMove: {
             [self.updateOperation addExecutionBlock:^{
-                [weakTableView deleteRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-                [weakTableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+                [weakSelf.tableView deleteRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+                [weakSelf.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            }];
+            break;
+        }
+        case TableChangeUpdate: {
+            [self.updateOperation addExecutionBlock:^{
+                [weakSelf.tableView reloadRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             }];
             break;
         }
@@ -139,6 +131,7 @@
     }
 }
 - (void)didChangeContent {
+    NSAssert([NSThread isMainThread], @"Not in main thread!");
     [self.updateOperation start];
 }
 

@@ -9,11 +9,15 @@
 @import Foundation;
 
 #import "ChatMessageWrapper.h"
-#import "DataStore.h"
+#import "CoreDataStore.h"
+#import "CoreDataSource.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ChatManager : NSObject <DataStoreDelegate>
+@interface ChatManager : NSObject
+
+@property (nonatomic, strong) CoreDataStore *dataStore;
+@property (nonatomic, strong) id <CoreDataSourceDelegate> dataSourceDelegate;
 
 - (id <ChatMessage>)objectAtIndexPath:(NSIndexPath *)indexPath;
 
