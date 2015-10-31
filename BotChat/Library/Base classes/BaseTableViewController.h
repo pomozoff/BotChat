@@ -8,6 +8,8 @@
 
 @import UIKit;
 
-@interface BaseTableViewController : UITableViewController
+#import "DataManagement.h"
+
+@interface BaseTableViewController : UITableViewController <DataPresenter>
 
 @end

@@ -7,9 +7,8 @@
 //
 
 #import "BaseTableViewController.h"
-#import "DataManagement.h"
 
-@interface BaseTableViewController () <DataSourceDelegate, DataPresenter>
+@interface BaseTableViewController () <DataSourceDelegate>
 
 @end
 
@@ -24,7 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //self.dataSource.presenter = self;
+    self.dataSource.presenter = self;
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
