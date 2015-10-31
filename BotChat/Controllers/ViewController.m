@@ -17,7 +17,7 @@ typedef enum : NSUInteger {
     ScrollDirectionDown = 2,
 } ScrollDirection;
 
-@interface ViewController () <UITextViewDelegate>
+@interface ViewController () <UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextView *inputTextView;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
@@ -25,9 +25,21 @@ typedef enum : NSUInteger {
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomInputViewConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *maxInputTextViewConstraint;
 
+@property (nonatomic, strong) UIImagePickerController *imagePickerController;
+
 @end
 
 @implementation ViewController
+
+#pragma mark - Properties
+
+- (UIImagePickerController *)imagePickerController {
+    if (!_imagePickerController) {
+        _imagePickerController = [[UIImagePickerController alloc] init];
+        _imagePickerController.delegate = self;
+    }
+    return _imagePickerController;
+}
 
 #pragma mark - Lifecycle
 
@@ -38,7 +50,7 @@ typedef enum : NSUInteger {
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    self.imagePickerController = nil;
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -66,11 +78,46 @@ typedef enum : NSUInteger {
     [self updateSendButtonState];
 }
 
+#pragma mark - <UIImagePickerControllerDelegate>
+
+- (void)imagePickerController:(UIImagePickerController * _Nonnull)picker didFinishPickingMediaWithInfo:(NSDictionary <NSString *, id> * _Nonnull)info {
+    __weak __typeof(self) weakSelf = self;
+    [self.imagePickerController dismissViewControllerAnimated:YES completion:^{
+        UIImage *image = info[UIImagePickerControllerOriginalImage];
+        if (image) {
+            [weakSelf.chatManager addNewChatMessageWithImage:image];
+        }
+    }];
+}
+
+#pragma mark - Actions
+
+- (IBAction)sendButtonTap:(UIButton *)sender {
+    NSString *text = [self processTextToSend];
+
+    self.inputTextView.text = @"";
+    [self updateSendButtonState];
+
+    [self.chatManager addNewChatMessageWithText:text];
+}
+- (IBAction)geoButtonTap:(id)sender {
+    [self.chatManager addNewChatMessageWithCoordinate:[self.coordinateManager currentCoordinate]];
+}
+- (IBAction)imageButtonTap:(id)sender {
+    self.imagePickerController.allowsEditing = NO;
+    self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    [self presentViewController:self.imagePickerController animated:YES completion:nil];
+}
+
 #pragma mark - Private
 
 - (void)updateCell:(ChatTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     id <ChatMessage> chatMessage = [self.chatManager objectAtIndexPath:indexPath];
     [cell updateWithChatMessage:chatMessage];
+}
+- (NSString *)processTextToSend {
+    NSString *trimmedText = [self.inputTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    return trimmedText;
 }
 
 #pragma mark - Private keyboard
@@ -149,9 +196,10 @@ typedef enum : NSUInteger {
     if (sectionsNumber > 0 && rowsNumber > 0) {
         NSInteger rowIndex = scrollDirection == ScrollDirectionUp ? 0 : rowsNumber - 1;
         UITableViewScrollPosition scrollPosition = scrollDirection == ScrollDirectionUp ? UITableViewScrollPositionTop : UITableViewScrollPositionBottom;
+        __weak __typeof(self) weakSelf = self;
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:rowIndex inSection:sectionsNumber - 1]
-                                  atScrollPosition:scrollPosition animated:YES];
+            [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:rowIndex inSection:sectionsNumber - 1]
+                                      atScrollPosition:scrollPosition animated:YES];
         });
     }
 }

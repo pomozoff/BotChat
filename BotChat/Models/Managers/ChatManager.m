@@ -24,8 +24,9 @@ static NSUInteger const kBatchSize = 20;
 - (void)setDataStore:(CoreDataStore *)dataStore {
     if (_dataStore != dataStore) {
         _dataStore = dataStore;
+        __weak __typeof(self) weakSelf = self;
         [_dataStore setupWithCompletion:^(BOOL succeeded, NSError *error) {
-            [self didCompleteCoreDataSetup:succeeded withError:error];
+            [weakSelf didCompleteCoreDataSetup:succeeded withError:error];
         }];
     }
 }
@@ -34,6 +35,15 @@ static NSUInteger const kBatchSize = 20;
 
 - (id <ChatMessage>)objectAtIndexPath:(NSIndexPath *)indexPath {
     return nil;
+}
+- (void)addNewChatMessageWithText:(NSString *)text {
+    
+}
+- (void)addNewChatMessageWithImage:(UIImage *)image {
+    
+}
+- (void)addNewChatMessageWithCoordinate:(CLLocationCoordinate2D)coordinate {
+    
 }
 
 #pragma mark - Private
@@ -68,8 +78,9 @@ static NSUInteger const kBatchSize = 20;
 - (void)didUpdateFetchedResultsController:(BOOL)succeeded withError:(NSError *)error {
     if (succeeded) {
         /*
+         __weak __typeof(self) weakSelf = self;
          [self.dataFetcher fetchDataWithCompletion:^(id _Nullable collection, NSError * _Nullable innerError) {
-         [self didFetchData:collection withError:innerError];
+         [weakSelf didFetchData:collection withError:innerError];
          }];
          */
     } else {

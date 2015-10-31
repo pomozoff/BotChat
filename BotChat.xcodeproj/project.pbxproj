@@ -17,11 +17,14 @@
 		26186C161BE4EB8F00DD40FA /* BaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26186C111BE4EB8F00DD40FA /* BaseTableViewController.m */; };
 		26186C171BE4EB8F00DD40FA /* ErrorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 26186C141BE4EB8F00DD40FA /* ErrorHelper.m */; };
 		26186C2B1BE4F51000DD40FA /* ChatDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 26186C1D1BE4F51000DD40FA /* ChatDataModel.xcdatamodeld */; };
-		26186C2C1BE4F51000DD40FA /* ChatMessage+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 26186C201BE4F51000DD40FA /* ChatMessage+CoreDataProperties.m */; };
 		26186C2D1BE4F51000DD40FA /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 26186C221BE4F51000DD40FA /* ChatMessage.m */; };
 		26186C2E1BE4F51000DD40FA /* CoreDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 26186C261BE4F51000DD40FA /* CoreDataStore.m */; };
 		26186C2F1BE4F51000DD40FA /* ChatManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 26186C2A1BE4F51000DD40FA /* ChatManager.m */; };
 		26186C321BE4F52600DD40FA /* CoreDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 26186C311BE4F52600DD40FA /* CoreDataSource.m */; };
+		26186C3B1BE51BB100DD40FA /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 26186C371BE51BB100DD40FA /* Image.m */; };
+		26186C411BE51C1A00DD40FA /* ChatMessage+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 26186C3E1BE51C1A00DD40FA /* ChatMessage+CoreDataProperties.m */; };
+		26186C421BE51C1A00DD40FA /* Image+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 26186C401BE51C1A00DD40FA /* Image+CoreDataProperties.m */; };
+		26186C451BE5397E00DD40FA /* CoordinateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 26186C441BE5397E00DD40FA /* CoordinateManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,8 +47,6 @@
 		26186C191BE4ECCF00DD40FA /* DataManagement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManagement.h; sourceTree = "<group>"; };
 		26186C1A1BE4EEA600DD40FA /* ChatMessageWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessageWrapper.h; sourceTree = "<group>"; };
 		26186C1E1BE4F51000DD40FA /* ChatDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ChatDataModel.xcdatamodel; sourceTree = "<group>"; };
-		26186C1F1BE4F51000DD40FA /* ChatMessage+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ChatMessage+CoreDataProperties.h"; sourceTree = "<group>"; };
-		26186C201BE4F51000DD40FA /* ChatMessage+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ChatMessage+CoreDataProperties.m"; sourceTree = "<group>"; };
 		26186C211BE4F51000DD40FA /* ChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessage.h; sourceTree = "<group>"; };
 		26186C221BE4F51000DD40FA /* ChatMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessage.m; sourceTree = "<group>"; };
 		26186C251BE4F51000DD40FA /* CoreDataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataStore.h; sourceTree = "<group>"; };
@@ -56,6 +57,14 @@
 		26186C301BE4F52600DD40FA /* CoreDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataSource.h; sourceTree = "<group>"; };
 		26186C311BE4F52600DD40FA /* CoreDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataSource.m; sourceTree = "<group>"; };
 		26186C331BE4F9F600DD40FA /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		26186C361BE51BB100DD40FA /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Image.h; sourceTree = "<group>"; };
+		26186C371BE51BB100DD40FA /* Image.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Image.m; sourceTree = "<group>"; };
+		26186C3D1BE51C1A00DD40FA /* ChatMessage+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ChatMessage+CoreDataProperties.h"; sourceTree = "<group>"; };
+		26186C3E1BE51C1A00DD40FA /* ChatMessage+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ChatMessage+CoreDataProperties.m"; sourceTree = "<group>"; };
+		26186C3F1BE51C1A00DD40FA /* Image+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Image+CoreDataProperties.h"; sourceTree = "<group>"; };
+		26186C401BE51C1A00DD40FA /* Image+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Image+CoreDataProperties.m"; sourceTree = "<group>"; };
+		26186C431BE5397E00DD40FA /* CoordinateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoordinateManager.h; sourceTree = "<group>"; };
+		26186C441BE5397E00DD40FA /* CoordinateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoordinateManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,11 +198,15 @@
 		26186C1C1BE4F51000DD40FA /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
-				26186C1D1BE4F51000DD40FA /* ChatDataModel.xcdatamodeld */,
-				26186C1F1BE4F51000DD40FA /* ChatMessage+CoreDataProperties.h */,
-				26186C201BE4F51000DD40FA /* ChatMessage+CoreDataProperties.m */,
+				26186C3D1BE51C1A00DD40FA /* ChatMessage+CoreDataProperties.h */,
+				26186C3E1BE51C1A00DD40FA /* ChatMessage+CoreDataProperties.m */,
+				26186C3F1BE51C1A00DD40FA /* Image+CoreDataProperties.h */,
+				26186C401BE51C1A00DD40FA /* Image+CoreDataProperties.m */,
 				26186C211BE4F51000DD40FA /* ChatMessage.h */,
 				26186C221BE4F51000DD40FA /* ChatMessage.m */,
+				26186C361BE51BB100DD40FA /* Image.h */,
+				26186C371BE51BB100DD40FA /* Image.m */,
+				26186C1D1BE4F51000DD40FA /* ChatDataModel.xcdatamodeld */,
 			);
 			path = "Core Data";
 			sourceTree = "<group>";
@@ -210,9 +223,9 @@
 		26186C241BE4F51000DD40FA /* Data Store */ = {
 			isa = PBXGroup;
 			children = (
+				26186C271BE4F51000DD40FA /* DataStore.h */,
 				26186C251BE4F51000DD40FA /* CoreDataStore.h */,
 				26186C261BE4F51000DD40FA /* CoreDataStore.m */,
-				26186C271BE4F51000DD40FA /* DataStore.h */,
 			);
 			path = "Data Store";
 			sourceTree = "<group>";
@@ -222,6 +235,8 @@
 			children = (
 				26186C291BE4F51000DD40FA /* ChatManager.h */,
 				26186C2A1BE4F51000DD40FA /* ChatManager.m */,
+				26186C431BE5397E00DD40FA /* CoordinateManager.h */,
+				26186C441BE5397E00DD40FA /* CoordinateManager.m */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -299,15 +314,18 @@
 				26186C2E1BE4F51000DD40FA /* CoreDataStore.m in Sources */,
 				26186BDA1BE4CF1300DD40FA /* AppDelegate.m in Sources */,
 				26186BEF1BE4D25700DD40FA /* ViewController.m in Sources */,
+				26186C421BE51C1A00DD40FA /* Image+CoreDataProperties.m in Sources */,
 				26186C171BE4EB8F00DD40FA /* ErrorHelper.m in Sources */,
 				26186C2D1BE4F51000DD40FA /* ChatMessage.m in Sources */,
+				26186C451BE5397E00DD40FA /* CoordinateManager.m in Sources */,
 				26186C2B1BE4F51000DD40FA /* ChatDataModel.xcdatamodeld in Sources */,
+				26186C411BE51C1A00DD40FA /* ChatMessage+CoreDataProperties.m in Sources */,
 				26186C2F1BE4F51000DD40FA /* ChatManager.m in Sources */,
 				26186C161BE4EB8F00DD40FA /* BaseTableViewController.m in Sources */,
 				26186BD71BE4CF1300DD40FA /* main.m in Sources */,
-				26186C2C1BE4F51000DD40FA /* ChatMessage+CoreDataProperties.m in Sources */,
 				26186BFF1BE4D60700DD40FA /* ChatTableViewCell.m in Sources */,
 				26186C321BE4F52600DD40FA /* CoreDataSource.m in Sources */,
+				26186C3B1BE51BB100DD40FA /* Image.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

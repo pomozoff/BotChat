@@ -1,5 +1,5 @@
 //
-//  ChatMessage+CoreDataProperties.m
+//  Image+CoreDataProperties.h
 //  BotChat
 //
 //  Created by Антон on 31.10.15.
@@ -9,17 +9,15 @@
 //  to delete and recreate this implementation file for your updated model.
 //
 
-#import "ChatMessage+CoreDataProperties.h"
+#import "Image.h"
 
-@implementation ChatMessage (CoreDataProperties)
+NS_ASSUME_NONNULL_BEGIN
 
-@dynamic date;
-@dynamic incoming;
-@dynamic message;
-@dynamic latitude;
-@dynamic longitude;
-@dynamic hasLocation;
-@dynamic thumbnail;
-@dynamic image;
+@interface Image (CoreDataProperties)
+
+@property (nullable, nonatomic, retain) NSData *image;
+@property (nullable, nonatomic, retain) ChatMessage *chatMessage;
 
 @end
+
+NS_ASSUME_NONNULL_END

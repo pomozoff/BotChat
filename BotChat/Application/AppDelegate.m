@@ -20,17 +20,10 @@ static NSString * const kCoreDataModelName = @"ChatDataModel";
 
 @implementation AppDelegate
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    if ([self.window.rootViewController isKindOfClass:[ViewController class]]) {
-        CoreDataSource *coreDataSource = [[CoreDataSource alloc] init];
-        ChatManager *chatManager = [[ChatManager alloc] init];
-        chatManager.dataSourceDelegate = coreDataSource;
-        chatManager.dataStore = [[CoreDataStore alloc] initWithModelName:kCoreDataModelName];
+#pragma mark - Lifecycle
 
-        ViewController *rootViewController = (ViewController *)self.window.rootViewController;
-        rootViewController.tableDataSource = coreDataSource;
-        rootViewController.chatManager = chatManager;
-    }
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [self setupApplication];
     return YES;
 }
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -49,6 +42,25 @@ static NSString * const kCoreDataModelName = @"ChatDataModel";
 }
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark - Private
+
+- (void)setupApplication {
+    if ([self.window.rootViewController isKindOfClass:[ViewController class]]) {
+        CoreDataSource *coreDataSource = [[CoreDataSource alloc] init];
+        ChatManager *chatManager = [[ChatManager alloc] init];
+        chatManager.dataSourceDelegate = coreDataSource;
+        chatManager.dataStore = [[CoreDataStore alloc] initWithModelName:kCoreDataModelName];
+        
+        CoordinateManager *coordinateManager = [[CoordinateManager alloc] init];
+        coordinateManager.locationManager = [[CLLocationManager alloc] init];
+        
+        ViewController *rootViewController = (ViewController *)self.window.rootViewController;
+        rootViewController.tableDataSource = coreDataSource;
+        rootViewController.chatManager = chatManager;
+        rootViewController.coordinateManager = coordinateManager;
+    }
 }
 
 @end

@@ -21,6 +21,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (id <ChatMessage>)objectAtIndexPath:(NSIndexPath *)indexPath;
 
+- (void)addNewChatMessageWithText:(NSString *)text;
+- (void)addNewChatMessageWithImage:(UIImage *)image;
+- (void)addNewChatMessageWithCoordinate:(CLLocationCoordinate2D)coordinate;
+
 @end
 
 NS_ASSUME_NONNULL_END

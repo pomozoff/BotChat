@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -18,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8Tb-cR-Vie" userLabel="Chat Table View">
-                                <rect key="frame" x="0.0" y="20" width="600" height="529"/>
+                                <rect key="frame" x="0.0" y="20" width="600" height="527"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -68,19 +69,45 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NOP-jO-49y" userLabel="User Input View">
-                                <rect key="frame" x="0.0" y="549" width="600" height="51"/>
+                                <rect key="frame" x="0.0" y="547" width="600" height="53"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SBa-Q6-nQg">
-                                        <rect key="frame" x="547" y="14" width="53" height="30"/>
+                                        <rect key="frame" x="547" y="15" width="53" height="30"/>
                                         <animations/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="53" id="qlB-rR-fDr"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="Send"/>
+                                        <connections>
+                                            <action selector="sendButtonTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Nl8-KQ-gjS"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8kw-rs-58C" userLabel="Image Button">
+                                        <rect key="frame" x="8" y="9" width="36" height="36"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="36" id="51i-GX-JLk"/>
+                                            <constraint firstAttribute="width" secondItem="8kw-rs-58C" secondAttribute="height" multiplier="1:1" id="5GL-4S-6Ns"/>
+                                        </constraints>
+                                        <state key="normal" image="images"/>
+                                        <connections>
+                                            <action selector="imageButtonTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3Xo-uR-BpW"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yUU-8m-SFn" userLabel="Geo Button">
+                                        <rect key="frame" x="46" y="9" width="36" height="36"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="yUU-8m-SFn" secondAttribute="height" multiplier="1:1" id="doh-IW-YCJ"/>
+                                        </constraints>
+                                        <state key="normal" image="geo"/>
+                                        <connections>
+                                            <action selector="geoButtonTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Spz-4u-gXR"/>
+                                        </connections>
                                     </button>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="pRw-PZ-zFD" userLabel="User Input Text View">
-                                        <rect key="frame" x="10" y="7" width="530" height="37"/>
+                                        <rect key="frame" x="86" y="8" width="457" height="37"/>
                                         <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -88,7 +115,7 @@
                                             <constraint firstAttribute="height" relation="lessThanOrEqual" priority="750" constant="100" id="i5d-bC-uti"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="send" enablesReturnKeyAutomatically="YES"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
                                         <connections>
                                             <outlet property="delegate" destination="BYZ-38-t0r" id="JJf-zR-NQn"/>
                                         </connections>
@@ -97,19 +124,21 @@
                                 <animations/>
                                 <color key="backgroundColor" red="0.92317290554545461" green="0.92317290554545461" blue="0.92317290554545461" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstItem="pRw-PZ-zFD" firstAttribute="leading" secondItem="yUU-8m-SFn" secondAttribute="trailing" constant="4" id="3f3-UD-okZ"/>
+                                    <constraint firstItem="8kw-rs-58C" firstAttribute="leading" secondItem="NOP-jO-49y" secondAttribute="leading" constant="8" id="A91-A5-GCJ"/>
+                                    <constraint firstItem="pRw-PZ-zFD" firstAttribute="bottom" secondItem="yUU-8m-SFn" secondAttribute="bottom" id="CQE-FU-Cj7"/>
                                     <constraint firstAttribute="trailing" secondItem="SBa-Q6-nQg" secondAttribute="trailing" id="Msf-os-Fhi"/>
                                     <constraint firstItem="SBa-Q6-nQg" firstAttribute="bottom" secondItem="pRw-PZ-zFD" secondAttribute="bottom" id="Onu-CR-scg"/>
-                                    <constraint firstItem="pRw-PZ-zFD" firstAttribute="trailing" secondItem="SBa-Q6-nQg" secondAttribute="leading" id="Ts8-cV-qQh">
-                                        <variation key="heightClass=compact" constant="-7"/>
-                                        <variation key="heightClass=regular" constant="-7"/>
-                                    </constraint>
-                                    <constraint firstItem="pRw-PZ-zFD" firstAttribute="leading" secondItem="NOP-jO-49y" secondAttribute="leading" constant="10" id="V4d-D1-Ucb"/>
-                                    <constraint firstItem="pRw-PZ-zFD" firstAttribute="top" secondItem="NOP-jO-49y" secondAttribute="top" constant="7" id="WR5-zn-NFQ"/>
-                                    <constraint firstAttribute="bottom" secondItem="pRw-PZ-zFD" secondAttribute="bottom" constant="7" id="ibP-LX-PvH"/>
+                                    <constraint firstItem="SBa-Q6-nQg" firstAttribute="leading" secondItem="pRw-PZ-zFD" secondAttribute="trailing" constant="4" id="Ts8-cV-qQh"/>
+                                    <constraint firstItem="pRw-PZ-zFD" firstAttribute="top" secondItem="NOP-jO-49y" secondAttribute="top" constant="8" id="WR5-zn-NFQ"/>
+                                    <constraint firstItem="yUU-8m-SFn" firstAttribute="width" secondItem="8kw-rs-58C" secondAttribute="width" id="dXt-4W-GMd"/>
+                                    <constraint firstAttribute="bottom" secondItem="pRw-PZ-zFD" secondAttribute="bottom" constant="8" id="ibP-LX-PvH"/>
+                                    <constraint firstItem="yUU-8m-SFn" firstAttribute="leading" secondItem="8kw-rs-58C" secondAttribute="trailing" constant="2" id="mmQ-Cq-kZv"/>
+                                    <constraint firstItem="yUU-8m-SFn" firstAttribute="bottom" secondItem="8kw-rs-58C" secondAttribute="bottom" id="qcP-CU-PdG"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jCI-Dk-c22">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="549"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="547"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
@@ -145,4 +174,8 @@
             <point key="canvasLocation" x="868" y="579"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="geo" width="21" height="21"/>
+        <image name="images" width="22" height="22"/>
+    </resources>
 </document>

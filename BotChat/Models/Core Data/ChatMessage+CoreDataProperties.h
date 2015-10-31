@@ -10,14 +10,20 @@
 //
 
 #import "ChatMessage.h"
+#import "Image.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ChatMessage (CoreDataProperties)
 
-@property (nullable, nonatomic, retain) NSString *message;
 @property (nullable, nonatomic, retain) NSDate *date;
 @property (nullable, nonatomic, retain) NSNumber *incoming;
+@property (nullable, nonatomic, retain) NSString *message;
+@property (nullable, nonatomic, retain) NSNumber *latitude;
+@property (nullable, nonatomic, retain) NSNumber *longitude;
+@property (nullable, nonatomic, retain) NSNumber *hasLocation;
+@property (nullable, nonatomic, retain) NSData *thumbnail;
+@property (nullable, nonatomic, retain) Image *image;
 
 @end
 

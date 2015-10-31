@@ -7,14 +7,21 @@
 //
 
 @import Foundation;
+@import UIKit;
+@import CoreLocation;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol ChatMessage <NSObject>
 
-@property (nullable, nonatomic, strong) NSString *message;
-@property (nullable, nonatomic, strong) NSDate *date;
-@property (nullable, nonatomic, strong) NSNumber *incoming;
+@property (nonatomic, strong, nullable) NSString *message;
+@property (nonatomic, strong, nullable) NSDate *date;
+@property (nonatomic, strong, nullable) NSNumber *incoming;
+@property (nonatomic, strong, nullable) UIImage *image;
+@property (nonatomic, assign) CLLocationDegrees latitude;
+@property (nonatomic, assign) CLLocationDegrees longitude;
+@property (nonatomic, assign) BOOL hasLocation;
+@property (nonatomic, assign) BOOL hasImage;
 
 @end
 

@@ -1,5 +1,5 @@
 //
-//  ChatMessage+CoreDataProperties.m
+//  Image+CoreDataProperties.m
 //  BotChat
 //
 //  Created by Антон on 31.10.15.
@@ -9,17 +9,11 @@
 //  to delete and recreate this implementation file for your updated model.
 //
 
-#import "ChatMessage+CoreDataProperties.h"
+#import "Image+CoreDataProperties.h"
 
-@implementation ChatMessage (CoreDataProperties)
+@implementation Image (CoreDataProperties)
 
-@dynamic date;
-@dynamic incoming;
-@dynamic message;
-@dynamic latitude;
-@dynamic longitude;
-@dynamic hasLocation;
-@dynamic thumbnail;
 @dynamic image;
+@dynamic chatMessage;
 
 @end
