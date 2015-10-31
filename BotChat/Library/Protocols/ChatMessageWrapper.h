@@ -14,14 +14,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol ChatMessage <NSObject>
 
-@property (nonatomic, strong, nullable) NSString *message;
-@property (nonatomic, strong, nullable) NSDate *date;
-@property (nonatomic, strong, nullable) NSNumber *incoming;
-@property (nonatomic, strong, nullable) UIImage *image;
-@property (nonatomic, assign) CLLocationDegrees latitude;
-@property (nonatomic, assign) CLLocationDegrees longitude;
-@property (nonatomic, assign) BOOL hasLocation;
-@property (nonatomic, assign) BOOL hasImage;
+@property (nonatomic, strong, nullable, readonly) NSString *text;
+@property (nonatomic, strong, nullable, readonly) NSDate *date;
+@property (nonatomic, strong, nullable, readonly) UIImage *image;
+@property (nonatomic, strong, nullable, readonly) UIImage *thumbnail;
+@property (nonatomic, assign, readonly) CLLocationDegrees latitude;
+@property (nonatomic, assign, readonly) CLLocationDegrees longitude;
+@property (nonatomic, assign, readonly) BOOL hasLocation;
+@property (nonatomic, assign, readonly) BOOL hasImage;
+@property (nonatomic, assign, readonly) BOOL incoming;
 
 @end
 

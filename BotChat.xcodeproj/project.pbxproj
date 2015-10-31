@@ -25,6 +25,7 @@
 		26186C411BE51C1A00DD40FA /* ChatMessage+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 26186C3E1BE51C1A00DD40FA /* ChatMessage+CoreDataProperties.m */; };
 		26186C421BE51C1A00DD40FA /* Image+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 26186C401BE51C1A00DD40FA /* Image+CoreDataProperties.m */; };
 		26186C451BE5397E00DD40FA /* CoordinateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 26186C441BE5397E00DD40FA /* CoordinateManager.m */; };
+		26186C481BE54A6F00DD40FA /* ChatMessageDecorator.m in Sources */ = {isa = PBXBuildFile; fileRef = 26186C471BE54A6F00DD40FA /* ChatMessageDecorator.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +66,8 @@
 		26186C401BE51C1A00DD40FA /* Image+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Image+CoreDataProperties.m"; sourceTree = "<group>"; };
 		26186C431BE5397E00DD40FA /* CoordinateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoordinateManager.h; sourceTree = "<group>"; };
 		26186C441BE5397E00DD40FA /* CoordinateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoordinateManager.m; sourceTree = "<group>"; };
+		26186C461BE54A6F00DD40FA /* ChatMessageDecorator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessageDecorator.h; sourceTree = "<group>"; };
+		26186C471BE54A6F00DD40FA /* ChatMessageDecorator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessageDecorator.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,6 +210,8 @@
 				26186C361BE51BB100DD40FA /* Image.h */,
 				26186C371BE51BB100DD40FA /* Image.m */,
 				26186C1D1BE4F51000DD40FA /* ChatDataModel.xcdatamodeld */,
+				26186C461BE54A6F00DD40FA /* ChatMessageDecorator.h */,
+				26186C471BE54A6F00DD40FA /* ChatMessageDecorator.m */,
 			);
 			path = "Core Data";
 			sourceTree = "<group>";
@@ -320,6 +325,7 @@
 				26186C451BE5397E00DD40FA /* CoordinateManager.m in Sources */,
 				26186C2B1BE4F51000DD40FA /* ChatDataModel.xcdatamodeld in Sources */,
 				26186C411BE51C1A00DD40FA /* ChatMessage+CoreDataProperties.m in Sources */,
+				26186C481BE54A6F00DD40FA /* ChatMessageDecorator.m in Sources */,
 				26186C2F1BE4F51000DD40FA /* ChatManager.m in Sources */,
 				26186C161BE4EB8F00DD40FA /* BaseTableViewController.m in Sources */,
 				26186BD71BE4CF1300DD40FA /* main.m in Sources */,

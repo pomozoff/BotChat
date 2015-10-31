@@ -8,8 +8,11 @@
 
 #import "ChatManager.h"
 #import "ChatMessage+CoreDataProperties.h"
+#import "ChatMessageDecorator.h"
 
 static NSUInteger const kBatchSize = 20;
+static NSString * const kSortColumnName = @"date";
+static NSString * const kChatMessageEntityName = @"ChatMessage";
 
 @interface ChatManager()
 
@@ -34,10 +37,13 @@ static NSUInteger const kBatchSize = 20;
 #pragma mark - Public
 
 - (id <ChatMessage>)objectAtIndexPath:(NSIndexPath *)indexPath {
-    return nil;
+    ChatMessage *chatMessage = [self.dataSource objectAtIndexPath:indexPath];
+    return [ChatMessageDecorator decoratedInstanceOf:chatMessage];
 }
 - (void)addNewChatMessageWithText:(NSString *)text {
-    
+    ChatMessage *chatMessage = [self addManagedObjectWithEntityName:kChatMessageEntityName];
+    chatMessage.text = text;
+    [self saveMessages];
 }
 - (void)addNewChatMessageWithImage:(UIImage *)image {
     
@@ -52,7 +58,7 @@ static NSUInteger const kBatchSize = 20;
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ChatMessage class])];
     request.predicate = nil;
     request.fetchBatchSize = kBatchSize;
-    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"date"
+    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:kSortColumnName
                                                               ascending:YES
                                                                selector:nil]];
     NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:request
@@ -61,6 +67,16 @@ static NSUInteger const kBatchSize = 20;
                                                                                      cacheName:nil];
     return frc;
 }
+- (ChatMessage *)addManagedObjectWithEntityName:(NSString *)entityName {
+    return [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:self.dataStore.addQueueManagedObjectContext];
+}
+- (void)saveMessages {
+    NSError *error;
+    [self.dataStore.addQueueManagedObjectContext save:&error];
+    if (error) {
+        NSLog(@"Save messages failed: %@", error);
+    }
+}
 
 #pragma mark - Callback handlers
 
@@ -68,7 +84,7 @@ static NSUInteger const kBatchSize = 20;
     if (succeeded) {
         NSFetchedResultsController *frc = [self fetchedResultsControllerWithManagedObjectContext:self.dataStore.mainQueueManagedObjectContext];
         __weak typeof(self) weakSelf = self;
-        [self.dataSourceDelegate updateFetchedResultsController:frc withCompletion:^(BOOL innerSucceeded, NSError *innerError) {
+        [self.dataSource updateFetchedResultsController:frc withCompletion:^(BOOL innerSucceeded, NSError *innerError) {
             [weakSelf didUpdateFetchedResultsController:innerSucceeded withError:innerError];
         }];
     } else {

@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ChatManager : NSObject
 
 @property (nonatomic, strong) CoreDataStore *dataStore;
-@property (nonatomic, strong) id <CoreDataSourceDelegate> dataSourceDelegate;
+@property (nonatomic, strong) id <CoreDataSource> dataSource;
 
 - (id <ChatMessage>)objectAtIndexPath:(NSIndexPath *)indexPath;
 

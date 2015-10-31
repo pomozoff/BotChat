@@ -13,14 +13,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol CoreDataSourceDelegate <NSObject>
+@protocol CoreDataSource <NSObject>
 
 - (void)updateFetchedResultsController:(NSFetchedResultsController *)newfrc withCompletion:(CompletionHandler)handler;
 - (id)objectAtIndexPath:(NSIndexPath *)indexPath;
 
 @end
 
-@interface CoreDataSource : NSObject <CoreDataSourceDelegate, TableDataSource, DataPresenterDelegate>
+@interface CoreDataSource : NSObject <CoreDataSource, TableDataSource, DataPresenterDelegate>
 
 @end
 

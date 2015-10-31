@@ -61,6 +61,10 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <animations/>
+                                        <connections>
+                                            <outlet property="bubbleView" destination="pJt-RK-RXy" id="Us8-rs-Gav"/>
+                                            <outlet property="chatTextLabel" destination="tJf-WR-hKO" id="2rc-CZ-qwT"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -112,7 +116,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="33" id="f11-PJ-qya"/>
-                                            <constraint firstAttribute="height" relation="lessThanOrEqual" priority="750" constant="100" id="i5d-bC-uti"/>
+                                            <constraint firstAttribute="height" relation="lessThanOrEqual" priority="500" constant="100" id="i5d-bC-uti"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
@@ -137,7 +141,7 @@
                                     <constraint firstItem="yUU-8m-SFn" firstAttribute="bottom" secondItem="8kw-rs-58C" secondAttribute="bottom" id="qcP-CU-PdG"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jCI-Dk-c22">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jCI-Dk-c22">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="547"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -164,8 +168,7 @@
                         <outlet property="inputTextView" destination="pRw-PZ-zFD" id="NzK-3u-dA0"/>
                         <outlet property="maxInputTextViewConstraint" destination="i5d-bC-uti" id="vGz-xI-57G"/>
                         <outlet property="sendButton" destination="SBa-Q6-nQg" id="0K5-yu-hBI"/>
-                        <outlet property="tableView" destination="8Tb-cR-Vie" id="lhN-4Y-kLb"/>
-                        <outlet property="transparentView" destination="jCI-Dk-c22" id="qh8-26-u7a"/>
+                        <outlet property="tableView" destination="8Tb-cR-Vie" id="iVi-9w-r6o"/>
                         <outlet property="view" destination="8bC-Xf-vdC" id="LUX-kQ-bAt"/>
                     </connections>
                 </viewController>

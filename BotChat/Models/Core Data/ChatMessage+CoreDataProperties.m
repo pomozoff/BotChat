@@ -15,7 +15,7 @@
 
 @dynamic date;
 @dynamic incoming;
-@dynamic message;
+@dynamic text;
 @dynamic latitude;
 @dynamic longitude;
 @dynamic hasLocation;

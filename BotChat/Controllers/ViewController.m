@@ -10,7 +10,6 @@
 #import "ChatTableViewCell.h"
 
 static NSString * const kCellReuseIdentifier = @"Chat Table Cell";
-static NSUInteger const kPercentOfInputTextViewHeight = 10;
 
 typedef enum : NSUInteger {
     ScrollDirectionUp = 1,
@@ -21,7 +20,6 @@ typedef enum : NSUInteger {
 
 @property (weak, nonatomic) IBOutlet UITextView *inputTextView;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
-@property (weak, nonatomic) IBOutlet UIView *transparentView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomInputViewConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *maxInputTextViewConstraint;
 
@@ -71,6 +69,12 @@ typedef enum : NSUInteger {
     return cell;
 }
 
+#pragma mark - Table view delegate
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    return UITableViewAutomaticDimension;
+}
+
 #pragma mark - Text view delegate
 
 - (void)textViewDidChange:(UITextView *)textView {
@@ -97,6 +101,8 @@ typedef enum : NSUInteger {
 
     self.inputTextView.text = @"";
     [self updateSendButtonState];
+    [self updateUserInputTextViewState:self.inputTextView];
+    [self.inputTextView updateConstraints];
 
     [self.chatManager addNewChatMessageWithText:text];
 }
@@ -141,7 +147,6 @@ typedef enum : NSUInteger {
     CGRect endFrame = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     
     BOOL isShowing = notification.name == UIKeyboardWillShowNotification;
-    self.transparentView.hidden = !isShowing;
     
     NSTimeInterval duration = [info[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     NSNumber *animationCurveRawNSN = info[UIKeyboardAnimationCurveUserInfoKey];
@@ -166,11 +171,7 @@ typedef enum : NSUInteger {
 - (void)addHideKeyboardGestureRecognizer {
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                           action:@selector(hideOpenedViews)];
-    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self
-                                                                                action:@selector(hideOpenedViews)];
-    swipe.direction = UISwipeGestureRecognizerDirectionDown;
-    [self.transparentView addGestureRecognizer:tap];
-    [self.transparentView addGestureRecognizer:swipe];
+    [self.tableView addGestureRecognizer:tap];
 }
 - (void)hideOpenedViews {
     [self dismissKeyboard];
@@ -208,8 +209,7 @@ typedef enum : NSUInteger {
                                               options:NSStringDrawingUsesLineFragmentOrigin
                                            attributes:@{NSFontAttributeName: textView.font}
                                               context:nil];
-    CGFloat maxHeight = self.maxInputTextViewConstraint.constant - self.maxInputTextViewConstraint.constant / kPercentOfInputTextViewHeight;
-    self.inputTextView.scrollEnabled = rect.size.height > maxHeight;
+    self.inputTextView.scrollEnabled = rect.size.height >= self.maxInputTextViewConstraint.constant;
 }
 
 @end

@@ -51,7 +51,7 @@ static NSString * const kCoreDataManagerErrorDomain = @"CoreDataManagerErrorDoma
     return [self.fetchedResultsController sectionIndexTitles];
 }
 
-#pragma mark - CoreDataSourceDelegate
+#pragma mark - CoreDataSource
 
 - (void)updateFetchedResultsController:(NSFetchedResultsController *)newfrc withCompletion:(CompletionHandler)handler {
     NSFetchedResultsController *oldfrc = _fetchedResultsController;

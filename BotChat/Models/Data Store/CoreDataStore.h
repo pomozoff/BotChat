@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithModelName:(NSString *)modelName NS_DESIGNATED_INITIALIZER;
 
 @property (nullable, nonatomic, strong, readonly) NSManagedObjectContext *mainQueueManagedObjectContext;
+@property (nullable, nonatomic, strong, readonly) NSManagedObjectContext *addQueueManagedObjectContext;
 
 @end
 

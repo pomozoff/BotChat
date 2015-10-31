@@ -19,6 +19,7 @@ typedef NS_ENUM(NSUInteger, CoreDataStoreError) {
 
 @property (nonnull, nonatomic, strong) NSManagedObjectContext *writerManagedObjectContext;
 @property (nonnull, nonatomic, strong, readwrite) NSManagedObjectContext *mainQueueManagedObjectContext;
+@property (nonnull, nonatomic, strong, readwrite) NSManagedObjectContext *addQueueManagedObjectContext;
 @property (nonnull, nonatomic, strong) NSString *modelName;
 
 @end
@@ -41,6 +42,12 @@ static NSString * const kDataBaseManagerErrorDomain = @"CoreDataStoreErrorDomain
         _mainQueueManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     }
     return _mainQueueManagedObjectContext;
+}
+- (NSManagedObjectContext *)addQueueManagedObjectContext {
+    if (!_addQueueManagedObjectContext) {
+        _addQueueManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    }
+    return _addQueueManagedObjectContext;
 }
 
 #pragma mark - Initialization
@@ -75,6 +82,7 @@ static NSString * const kDataBaseManagerErrorDomain = @"CoreDataStoreErrorDomain
     
     self.writerManagedObjectContext.persistentStoreCoordinator = psc;
     self.mainQueueManagedObjectContext.parentContext = self.writerManagedObjectContext;
+    self.addQueueManagedObjectContext.parentContext = self.mainQueueManagedObjectContext;
     
     __weak __typeof(self) weakSelf = self;
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
