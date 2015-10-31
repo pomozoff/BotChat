@@ -9,6 +9,11 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
 
+#import "ChatManager.h"
+#import "CoreDataStore.h"
+
+static NSString * const kCoreDataModelName = @"ChatDataModel";
+
 @interface AppDelegate ()
 
 @end
@@ -18,7 +23,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     if ([self.window.rootViewController isKindOfClass:[ViewController class]]) {
         ViewController *rootViewController = (ViewController *)self.window.rootViewController;
-        
+        ChatManager *chatManager = [[ChatManager alloc] init];
+        chatManager.dataStore = [[CoreDataStore alloc] initWithModelName:kCoreDataModelName];
+        [chatManager.dataStore setupWithCompletion:^(BOOL succeeded, NSError * __nullable error) {
+            rootViewController.chatManager = chatManager;
+        }];
     }
 
     return YES;
