@@ -12,9 +12,16 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef enum : NSUInteger {
+    ScrollDirectionUp = 1,
+    ScrollDirectionDown = 2,
+} ScrollDirection;
+
 @interface BaseTableViewController : UIViewController <TableDataSourceDelegate, DataPresenter>
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
+
+- (void)scrollMessages:(ScrollDirection)scrollDirection;
 
 @end
 

@@ -11,7 +11,8 @@
 #import "ChatMessageDecorator.h"
 
 static NSUInteger const kBatchSize = 20;
-static NSString * const kSortColumnName = @"date";
+static NSString * const kSortColumnDate = @"date";
+static NSString * const kSortColumnIncoming = @"incoming";
 static NSString * const kChatMessageEntityName = @"ChatMessage";
 
 @interface ChatManager()
@@ -41,8 +42,15 @@ static NSString * const kChatMessageEntityName = @"ChatMessage";
     return [ChatMessageDecorator decoratedInstanceOf:chatMessage];
 }
 - (void)addNewChatMessageWithText:(NSString *)text {
-    ChatMessage *chatMessage = [self addManagedObjectWithEntityName:kChatMessageEntityName];
-    chatMessage.text = text;
+    ChatMessage *outgoingChatMessage = [self addManagedObjectWithEntityName:kChatMessageEntityName];
+    outgoingChatMessage.text = text;
+    outgoingChatMessage.incoming = [NSNumber numberWithBool:NO];
+    outgoingChatMessage.date = [NSDate date];
+    
+    ChatMessage *incomingChatMessage = [self duplicateMessage:outgoingChatMessage];
+    incomingChatMessage.incoming = [NSNumber numberWithBool:YES];
+    incomingChatMessage.date = [NSDate date];
+    
     [self saveMessages];
 }
 - (void)addNewChatMessageWithImage:(UIImage *)image {
@@ -58,9 +66,7 @@ static NSString * const kChatMessageEntityName = @"ChatMessage";
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ChatMessage class])];
     request.predicate = nil;
     request.fetchBatchSize = kBatchSize;
-    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:kSortColumnName
-                                                              ascending:YES
-                                                               selector:nil]];
+    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:kSortColumnDate ascending:YES]];
     NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:request
                                                                           managedObjectContext:managedObjectContext
                                                                             sectionNameKeyPath:nil
@@ -69,6 +75,20 @@ static NSString * const kChatMessageEntityName = @"ChatMessage";
 }
 - (ChatMessage *)addManagedObjectWithEntityName:(NSString *)entityName {
     return [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:self.dataStore.addQueueManagedObjectContext];
+}
+- (ChatMessage *)duplicateMessage:(ChatMessage *)chatMessage {
+    ChatMessage *newChatMessage = [self addManagedObjectWithEntityName:kChatMessageEntityName];
+    
+    for (NSAttributeDescription *attribute in chatMessage.entity.properties) {
+        if([attribute isKindOfClass:[NSAttributeDescription class]]) {
+            id value = [chatMessage valueForKey:attribute.name];
+            [newChatMessage setValue:value forKey:attribute.name];
+        }
+    }
+    [chatMessage.image addChatMessageObject:newChatMessage];
+    newChatMessage.image = chatMessage.image;
+
+    return newChatMessage;
 }
 - (void)saveMessages {
     NSError *error;

@@ -55,7 +55,9 @@
     __weak __typeof(self) weakSelf = self;
     self.updateOperation.completionBlock = ^{
         dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf.tableView endUpdates];
+            __strong __typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf.tableView endUpdates];
+            [strongSelf scrollMessages:ScrollDirectionDown];
         });
     };
 }
@@ -133,6 +135,21 @@
 - (void)didChangeContent {
     NSAssert([NSThread isMainThread], @"Not in main thread!");
     [self.updateOperation start];
+}
+
+- (void)scrollMessages:(ScrollDirection)scrollDirection {
+    //NSLog(@"Scrolling %@", scrollDirection == ScrollDirectionUp ? @"up" : @"down");
+    NSInteger sectionsNumber = [self.tableDataSource numberOfSections];
+    NSInteger rowsNumber = [self.tableDataSource numberOfItemsInSection:sectionsNumber - 1];
+    if (sectionsNumber > 0 && rowsNumber > 0) {
+        NSInteger rowIndex = scrollDirection == ScrollDirectionUp ? 0 : rowsNumber - 1;
+        UITableViewScrollPosition scrollPosition = scrollDirection == ScrollDirectionUp ? UITableViewScrollPositionTop : UITableViewScrollPositionBottom;
+        __weak __typeof(self) weakSelf = self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:rowIndex inSection:sectionsNumber - 1]
+                                      atScrollPosition:scrollPosition animated:YES];
+        });
+    }
 }
 
 @end

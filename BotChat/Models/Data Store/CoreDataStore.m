@@ -87,7 +87,7 @@ static NSString * const kDataBaseManagerErrorDomain = @"CoreDataStoreErrorDomain
     __weak __typeof(self) weakSelf = self;
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(queue, ^{
-        CoreDataStore *strongSelf = weakSelf;
+        __strong __typeof(weakSelf) strongSelf = weakSelf;
         NSError *urlError = nil;
         NSURL *storeSqliteURL = [strongSelf setupStoreSqliteURLWithError:&urlError];
         

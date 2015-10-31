@@ -2,7 +2,7 @@
 //  Image+CoreDataProperties.h
 //  BotChat
 //
-//  Created by Антон on 31.10.15.
+//  Created by Антон on 01.11.15.
 //  Copyright © 2015 Akademon Ltd. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -16,7 +16,16 @@ NS_ASSUME_NONNULL_BEGIN
 @interface Image (CoreDataProperties)
 
 @property (nullable, nonatomic, retain) NSData *image;
-@property (nullable, nonatomic, retain) ChatMessage *chatMessage;
+@property (nullable, nonatomic, retain) NSSet<ChatMessage *> *chatMessage;
+
+@end
+
+@interface Image (CoreDataGeneratedAccessors)
+
+- (void)addChatMessageObject:(ChatMessage *)value;
+- (void)removeChatMessageObject:(ChatMessage *)value;
+- (void)addChatMessage:(NSSet<ChatMessage *> *)values;
+- (void)removeChatMessage:(NSSet<ChatMessage *> *)values;
 
 @end
 

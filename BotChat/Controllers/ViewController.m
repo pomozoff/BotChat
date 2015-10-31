@@ -11,11 +11,6 @@
 
 static NSString * const kCellReuseIdentifier = @"Chat Table Cell";
 
-typedef enum : NSUInteger {
-    ScrollDirectionUp = 1,
-    ScrollDirectionDown = 2,
-} ScrollDirection;
-
 @interface ViewController () <UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextView *inputTextView;
@@ -189,20 +184,6 @@ typedef enum : NSUInteger {
 }
 - (void)updateSendButtonState {
     self.sendButton.enabled = self.inputTextView.text.length > 0;
-}
-- (void)scrollMessages:(ScrollDirection)scrollDirection {
-    //NSLog(@"Scrolling %@", scrollDirection == ScrollDirectionUp ? @"up" : @"down");
-    NSInteger sectionsNumber = [self.tableDataSource numberOfSections];
-    NSInteger rowsNumber = [self.tableDataSource numberOfItemsInSection:sectionsNumber - 1];
-    if (sectionsNumber > 0 && rowsNumber > 0) {
-        NSInteger rowIndex = scrollDirection == ScrollDirectionUp ? 0 : rowsNumber - 1;
-        UITableViewScrollPosition scrollPosition = scrollDirection == ScrollDirectionUp ? UITableViewScrollPositionTop : UITableViewScrollPositionBottom;
-        __weak __typeof(self) weakSelf = self;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:rowIndex inSection:sectionsNumber - 1]
-                                      atScrollPosition:scrollPosition animated:YES];
-        });
-    }
 }
 - (void)updateUserInputTextViewState:(UITextView *)textView {
     CGRect rect = [textView.text boundingRectWithSize:CGSizeMake(textView.frame.size.width, CGFLOAT_MAX)

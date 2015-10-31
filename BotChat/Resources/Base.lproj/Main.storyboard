@@ -4,6 +4,8 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -31,10 +33,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pJt-RK-RXy" userLabel="Bubble View">
-                                                    <rect key="frame" x="180" y="1" width="410" height="42"/>
+                                                    <rect key="frame" x="230" y="1" width="360" height="42"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tJf-WR-hKO">
-                                                            <rect key="frame" x="8" y="8" width="394" height="26"/>
+                                                            <rect key="frame" x="8" y="8" width="344" height="26"/>
                                                             <animations/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -43,7 +45,7 @@
                                                     </subviews>
                                                     <animations/>
                                                     <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="trailing" secondItem="tJf-WR-hKO" secondAttribute="trailing" constant="8" id="AGO-8t-Xwi"/>
                                                         <constraint firstItem="tJf-WR-hKO" firstAttribute="leading" secondItem="pJt-RK-RXy" secondAttribute="leading" constant="8" id="FGO-yk-lOq"/>
@@ -54,9 +56,10 @@
                                             </subviews>
                                             <animations/>
                                             <constraints>
+                                                <constraint firstItem="pJt-RK-RXy" firstAttribute="leading" secondItem="q9a-A7-lPu" secondAttribute="leadingMargin" priority="500" constant="10" id="6xK-1V-Asz"/>
                                                 <constraint firstAttribute="bottom" secondItem="pJt-RK-RXy" secondAttribute="bottom" constant="1" id="Dy0-Bv-Iop"/>
-                                                <constraint firstItem="pJt-RK-RXy" firstAttribute="leading" secondItem="q9a-A7-lPu" secondAttribute="leading" constant="180" id="FIh-Rs-tqO"/>
-                                                <constraint firstAttribute="trailing" secondItem="pJt-RK-RXy" secondAttribute="trailing" constant="10" id="n5s-tE-VqM"/>
+                                                <constraint firstItem="pJt-RK-RXy" firstAttribute="width" secondItem="q9a-A7-lPu" secondAttribute="width" multiplier="0.6" id="Fdq-PF-skj"/>
+                                                <constraint firstAttribute="trailing" secondItem="pJt-RK-RXy" secondAttribute="trailing" priority="750" constant="10" id="n5s-tE-VqM"/>
                                                 <constraint firstItem="pJt-RK-RXy" firstAttribute="top" secondItem="q9a-A7-lPu" secondAttribute="top" constant="1" id="ph6-eJ-EyJ"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -64,6 +67,8 @@
                                         <connections>
                                             <outlet property="bubbleView" destination="pJt-RK-RXy" id="Us8-rs-Gav"/>
                                             <outlet property="chatTextLabel" destination="tJf-WR-hKO" id="2rc-CZ-qwT"/>
+                                            <outlet property="leadingBubbleViewConstraint" destination="6xK-1V-Asz" id="anw-10-ht6"/>
+                                            <outlet property="trailingBubbleViewConstraint" destination="n5s-tE-VqM" id="UqV-pn-YdU"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

@@ -2,7 +2,7 @@
 //  ChatMessage+CoreDataProperties.h
 //  BotChat
 //
-//  Created by Антон on 31.10.15.
+//  Created by Антон on 01.11.15.
 //  Copyright © 2015 Akademon Ltd. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu

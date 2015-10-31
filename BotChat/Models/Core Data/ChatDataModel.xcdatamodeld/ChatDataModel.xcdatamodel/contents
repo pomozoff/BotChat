@@ -12,7 +12,7 @@
     </entity>
     <entity name="Image" representedClassName="Image" syncable="YES">
         <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
-        <relationship name="chatMessage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ChatMessage" inverseName="image" inverseEntity="ChatMessage" syncable="YES"/>
+        <relationship name="chatMessage" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ChatMessage" inverseName="image" inverseEntity="ChatMessage" syncable="YES"/>
     </entity>
     <elements>
         <element name="ChatMessage" positionX="-369" positionY="-48" width="128" height="163"/>
