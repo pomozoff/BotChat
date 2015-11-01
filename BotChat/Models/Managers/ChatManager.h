@@ -11,6 +11,7 @@
 #import "ChatMessageWrapper.h"
 #import "CoreDataStore.h"
 #import "CoreDataSource.h"
+#import "LocationDataSource.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) CoreDataStore *dataStore;
 @property (nonatomic, strong) id <CoreDataSource> dataSource;
+@property (nonatomic, strong) id <LocationDataSource> locationDataSource;
 
 - (id <ChatMessage>)objectAtIndexPath:(NSIndexPath *)indexPath;
 

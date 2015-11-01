@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSNumber *longitude;
 @property (nullable, nonatomic, retain) NSNumber *hasLocation;
 @property (nullable, nonatomic, retain) NSData *thumbnail;
+@property (nullable, nonatomic, retain) NSNumber *hasImage;
 @property (nullable, nonatomic, retain) Image *image;
 
 @end

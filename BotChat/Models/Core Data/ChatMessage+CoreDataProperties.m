@@ -20,6 +20,7 @@
 @dynamic longitude;
 @dynamic hasLocation;
 @dynamic thumbnail;
+@dynamic hasImage;
 @dynamic image;
 
 @end

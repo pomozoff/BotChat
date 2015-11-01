@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readonly) BOOL hasLocation;
 @property (nonatomic, assign, readonly) BOOL hasImage;
 @property (nonatomic, assign, readonly) BOOL incoming;
+@property (nonatomic, assign, readonly) BOOL isTextMessage;
 
 @end
 

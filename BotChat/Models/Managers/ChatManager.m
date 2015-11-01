@@ -44,20 +44,20 @@ static NSString * const kChatMessageEntityName = @"ChatMessage";
 - (void)addNewChatMessageWithText:(NSString *)text {
     ChatMessage *outgoingChatMessage = [self addManagedObjectWithEntityName:kChatMessageEntityName];
     outgoingChatMessage.text = text;
-    outgoingChatMessage.incoming = [NSNumber numberWithBool:NO];
-    outgoingChatMessage.date = [NSDate date];
-    
-    ChatMessage *incomingChatMessage = [self duplicateMessage:outgoingChatMessage];
-    incomingChatMessage.incoming = [NSNumber numberWithBool:YES];
-    incomingChatMessage.date = [NSDate date];
-    
-    [self saveMessages];
+    [self processOutgoingChatMessage:outgoingChatMessage];
 }
 - (void)addNewChatMessageWithImage:(UIImage *)image {
-    
+    ChatMessage *outgoingChatMessage = [self addManagedObjectWithEntityName:kChatMessageEntityName];
+    outgoingChatMessage.hasImage = [NSNumber numberWithBool:YES];
+    //outgoingChatMessage.image.image = UIImagePNGRepresentation(image);
+    [self processOutgoingChatMessage:outgoingChatMessage];
 }
 - (void)addNewChatMessageWithCoordinate:(CLLocationCoordinate2D)coordinate {
-    
+    ChatMessage *outgoingChatMessage = [self addManagedObjectWithEntityName:kChatMessageEntityName];
+    outgoingChatMessage.hasLocation = [NSNumber numberWithBool:YES];
+    outgoingChatMessage.latitude = [NSNumber numberWithDouble:coordinate.latitude];
+    outgoingChatMessage.longitude = [NSNumber numberWithDouble:coordinate.longitude];
+    [self processOutgoingChatMessage:outgoingChatMessage];
 }
 
 #pragma mark - Private
@@ -96,6 +96,16 @@ static NSString * const kChatMessageEntityName = @"ChatMessage";
     if (error) {
         NSLog(@"Save messages failed: %@", error);
     }
+}
+- (void)processOutgoingChatMessage:(ChatMessage *)outgoingChatMessage {
+    outgoingChatMessage.incoming = [NSNumber numberWithBool:NO];
+    outgoingChatMessage.date = [NSDate date];
+    
+    ChatMessage *incomingChatMessage = [self duplicateMessage:outgoingChatMessage];
+    incomingChatMessage.incoming = [NSNumber numberWithBool:YES];
+    incomingChatMessage.date = [NSDate date];
+    
+    [self saveMessages];
 }
 
 #pragma mark - Callback handlers

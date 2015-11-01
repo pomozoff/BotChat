@@ -35,6 +35,13 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pJt-RK-RXy" userLabel="Bubble View">
                                                     <rect key="frame" x="230" y="1" width="360" height="42"/>
                                                     <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="q1D-8V-5Sd">
+                                                            <rect key="frame" x="0.0" y="0.0" width="360" height="300"/>
+                                                            <animations/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="q1D-8V-5Sd" secondAttribute="height" multiplier="1:1" priority="250" id="RjX-qK-UdH"/>
+                                                            </constraints>
+                                                        </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tJf-WR-hKO">
                                                             <rect key="frame" x="8" y="8" width="344" height="26"/>
                                                             <animations/>
@@ -49,23 +56,29 @@
                                                     <constraints>
                                                         <constraint firstAttribute="trailing" secondItem="tJf-WR-hKO" secondAttribute="trailing" constant="8" id="AGO-8t-Xwi"/>
                                                         <constraint firstItem="tJf-WR-hKO" firstAttribute="leading" secondItem="pJt-RK-RXy" secondAttribute="leading" constant="8" id="FGO-yk-lOq"/>
+                                                        <constraint firstAttribute="trailing" secondItem="q1D-8V-5Sd" secondAttribute="trailing" id="Qqj-fl-CsX"/>
+                                                        <constraint firstItem="q1D-8V-5Sd" firstAttribute="leading" secondItem="pJt-RK-RXy" secondAttribute="leading" id="Tl3-yC-fwc"/>
+                                                        <constraint firstAttribute="bottom" secondItem="q1D-8V-5Sd" secondAttribute="bottom" priority="300" id="Txa-Z1-OwM"/>
                                                         <constraint firstItem="tJf-WR-hKO" firstAttribute="top" secondItem="pJt-RK-RXy" secondAttribute="top" constant="8" id="faI-53-ntZ"/>
-                                                        <constraint firstAttribute="bottom" secondItem="tJf-WR-hKO" secondAttribute="bottom" constant="8" id="yhB-NM-Sdj"/>
+                                                        <constraint firstItem="q1D-8V-5Sd" firstAttribute="top" secondItem="pJt-RK-RXy" secondAttribute="top" id="gNf-lR-trD"/>
+                                                        <constraint firstAttribute="bottom" secondItem="tJf-WR-hKO" secondAttribute="bottom" priority="750" constant="8" id="yhB-NM-Sdj"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
                                             <animations/>
                                             <constraints>
-                                                <constraint firstItem="pJt-RK-RXy" firstAttribute="leading" secondItem="q9a-A7-lPu" secondAttribute="leadingMargin" priority="500" constant="10" id="6xK-1V-Asz"/>
+                                                <constraint firstItem="pJt-RK-RXy" firstAttribute="leading" secondItem="q9a-A7-lPu" secondAttribute="leadingMargin" priority="800" constant="10" id="6xK-1V-Asz"/>
                                                 <constraint firstAttribute="bottom" secondItem="pJt-RK-RXy" secondAttribute="bottom" constant="1" id="Dy0-Bv-Iop"/>
                                                 <constraint firstItem="pJt-RK-RXy" firstAttribute="width" secondItem="q9a-A7-lPu" secondAttribute="width" multiplier="0.6" id="Fdq-PF-skj"/>
-                                                <constraint firstAttribute="trailing" secondItem="pJt-RK-RXy" secondAttribute="trailing" priority="750" constant="10" id="n5s-tE-VqM"/>
+                                                <constraint firstAttribute="trailing" secondItem="pJt-RK-RXy" secondAttribute="trailing" priority="850" constant="10" id="n5s-tE-VqM"/>
                                                 <constraint firstItem="pJt-RK-RXy" firstAttribute="top" secondItem="q9a-A7-lPu" secondAttribute="top" constant="1" id="ph6-eJ-EyJ"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <animations/>
                                         <connections>
+                                            <outlet property="aspectImageViewConstraint" destination="RjX-qK-UdH" id="Gdu-nH-jeb"/>
                                             <outlet property="bubbleView" destination="pJt-RK-RXy" id="Us8-rs-Gav"/>
+                                            <outlet property="chatImageView" destination="q1D-8V-5Sd" id="4ZB-ch-k5V"/>
                                             <outlet property="chatTextLabel" destination="tJf-WR-hKO" id="2rc-CZ-qwT"/>
                                             <outlet property="leadingBubbleViewConstraint" destination="6xK-1V-Asz" id="anw-10-ht6"/>
                                             <outlet property="trailingBubbleViewConstraint" destination="n5s-tE-VqM" id="UqV-pn-YdU"/>
@@ -185,5 +198,6 @@
     <resources>
         <image name="geo" width="21" height="21"/>
         <image name="images" width="22" height="22"/>
+        <image name="placeholder" width="300" height="300"/>
     </resources>
 </document>

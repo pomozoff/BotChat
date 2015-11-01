@@ -10,10 +10,12 @@
 #define Common_h
 
 @import Foundation;
+@import UIKit;
 
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^CompletionHandler)(BOOL succeeded, NSError * __nullable error);
+typedef void (^FetchImageCompletionHandler)(UIImage * _Nullable image, NSError * _Nullable error);
 
 NS_ASSUME_NONNULL_END
 

@@ -11,6 +11,7 @@
 
 #import "ChatManager.h"
 #import "CoreDataStore.h"
+#import "LocationDataSource.h"
 
 static NSString * const kCoreDataModelName = @"ChatDataModel";
 
@@ -34,7 +35,7 @@ static NSString * const kCoreDataModelName = @"ChatDataModel";
 #pragma mark - Lifecycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [self setupApplication];
+    [self configureApplication];
     return YES;
 }
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -72,10 +73,13 @@ static NSString * const kCoreDataModelName = @"ChatDataModel";
 
 #pragma mark - Private
 
-- (void)setupApplication {
+- (void)configureApplication {
     if ([self.window.rootViewController isKindOfClass:[ViewController class]]) {
+        LocationDataSource *locationDataSource = [[LocationDataSource alloc] init];
         CoreDataSource *coreDataSource = [[CoreDataSource alloc] init];
+
         ChatManager *chatManager = [[ChatManager alloc] init];
+        chatManager.locationDataSource = locationDataSource;
         chatManager.dataSource = coreDataSource;
         chatManager.dataStore = self.dataStore;
         

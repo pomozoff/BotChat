@@ -26,6 +26,7 @@
 @dynamic hasLocation;
 @dynamic thumbnail;
 @dynamic image;
+@dynamic isTextMessage;
 
 #pragma mark - Lifecycle
 
@@ -52,10 +53,13 @@
     return [self.instance.hasLocation boolValue];
 }
 - (BOOL)hasImage {
-    return self.instance.thumbnail != nil;
+    return [self.instance.hasImage boolValue];
 }
 - (BOOL)incoming {
     return [self.instance.incoming boolValue];
+}
+- (BOOL)isTextMessage {
+    return ![self hasLocation] && ![self hasImage];
 }
 - (UIImage *)thumbnail {
     return [UIImage imageWithData:self.instance.thumbnail];

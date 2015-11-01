@@ -15,9 +15,11 @@ static NSUInteger const kLowPriority = 250;
 
 @property (weak, nonatomic) IBOutlet UIView *bubbleView;
 @property (weak, nonatomic) IBOutlet UILabel *chatTextLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *chatImageView;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *trailingBubbleViewConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *leadingBubbleViewConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *aspectImageViewConstraint;
 
 @end
 
@@ -26,8 +28,11 @@ static NSUInteger const kLowPriority = 250;
 #pragma mark - Public
 
 - (void)updateWithChatMessage:(id <ChatMessage>)chatMessage {
-    self.chatTextLabel.text = chatMessage.text;
+    [self setupValuesForChatMessage:chatMessage];
     [self setupAppearanceForChatMessage:chatMessage];
+}
+- (void)updateImage:(UIImage *)image {
+    self.chatImageView.image = image != nil ? image : [UIImage imageNamed:@"placeholder"];
 }
 
 #pragma mark - Lifecycle
@@ -40,6 +45,16 @@ static NSUInteger const kLowPriority = 250;
 
 #pragma mark - Private
 
+- (void)setupValuesForChatMessage:(id <ChatMessage>)chatMessage {
+    if (chatMessage.isTextMessage) {
+        self.chatTextLabel.text = chatMessage.text;
+        self.chatImageView.image = nil;
+    } else if (chatMessage.hasImage) {
+        self.chatTextLabel.text = @"";
+        [self updateImage:chatMessage.thumbnail];
+    }
+    self.chatImageView.hidden = chatMessage.isTextMessage;
+}
 - (void)setupAppearanceForChatMessage:(id <ChatMessage>)chatMessage {
     UIColor *backgroundColor;
     UIColor *textColor;
@@ -56,10 +71,12 @@ static NSUInteger const kLowPriority = 250;
         leadingPriority = kLowPriority;
         trailingPriority = kHighPriority;
     }
-    self.bubbleView.backgroundColor = backgroundColor;
+    self.bubbleView.backgroundColor = chatMessage.isTextMessage ? backgroundColor : [UIColor clearColor];
     self.chatTextLabel.textColor = textColor;
     self.leadingBubbleViewConstraint.priority = leadingPriority;
     self.trailingBubbleViewConstraint.priority = trailingPriority;
+    
+    self.aspectImageViewConstraint.priority = chatMessage.isTextMessage ? kLowPriority : kHighPriority;
 }
 
 @end

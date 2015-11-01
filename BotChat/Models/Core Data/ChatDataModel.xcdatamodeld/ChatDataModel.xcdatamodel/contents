@@ -2,6 +2,7 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="15B42" minimumToolsVersion="Xcode 7.0">
     <entity name="ChatMessage" representedClassName="ChatMessage" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="hasImage" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="hasLocation" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="incoming" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
@@ -15,7 +16,7 @@
         <relationship name="chatMessage" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ChatMessage" inverseName="image" inverseEntity="ChatMessage" syncable="YES"/>
     </entity>
     <elements>
-        <element name="ChatMessage" positionX="-369" positionY="-48" width="128" height="163"/>
+        <element name="ChatMessage" positionX="-369" positionY="-48" width="128" height="178"/>
         <element name="Image" positionX="-81" positionY="125" width="128" height="73"/>
     </elements>
 </model>
