@@ -131,11 +131,13 @@ static NSString * const kImageEntityName = @"Image";
     return newChatMessage;
 }
 - (void)saveMessages {
+    [self.dataStore.addQueueManagedObjectContext performBlock:^{
     NSError *error;
     [self.dataStore.addQueueManagedObjectContext save:&error];
     if (error) {
         NSLog(@"Save messages failed: %@", error);
     }
+    }];
 }
 - (void)processOutgoingChatMessage:(ChatMessage *)outgoingChatMessage {
     outgoingChatMessage.incoming = [NSNumber numberWithBool:NO];
