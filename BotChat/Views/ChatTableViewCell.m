@@ -49,7 +49,7 @@ static NSUInteger const kLowPriority = 250;
     if (chatMessage.isTextMessage) {
         self.chatTextLabel.text = chatMessage.text;
         self.chatImageView.image = nil;
-    } else if (chatMessage.hasImage) {
+    } else {
         self.chatTextLabel.text = @"";
         [self updateImage:chatMessage.thumbnail];
     }
