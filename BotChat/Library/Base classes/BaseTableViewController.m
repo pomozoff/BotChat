@@ -111,13 +111,9 @@
           forChangeType:(TableChangeType)type
            newIndexPath:(NSIndexPath *)newIndexPath
 {
-    if (!newIndexPath) {
-        return;
-    }
     __weak __typeof(self) weakSelf = self;
     switch(type) {
         case TableChangeInsert: {
-            NSAssert(self.updateOperation, @"Update operation is nil!");
             [self.updateOperation addExecutionBlock:^{
                 [weakSelf.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             }];
@@ -125,20 +121,20 @@
         }
         case TableChangeDelete: {
             [self.updateOperation addExecutionBlock:^{
-                [weakSelf.tableView deleteRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+                [weakSelf.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             }];
             break;
         }
         case TableChangeMove: {
             [self.updateOperation addExecutionBlock:^{
-                [weakSelf.tableView deleteRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+                [weakSelf.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
                 [weakSelf.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             }];
             break;
         }
         case TableChangeUpdate: {
             [self.updateOperation addExecutionBlock:^{
-                [weakSelf.tableView reloadRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+                [weakSelf.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             }];
             break;
         }
