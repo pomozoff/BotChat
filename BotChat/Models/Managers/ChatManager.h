@@ -27,6 +27,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)addNewChatMessageWithImage:(UIImage *)image;
 - (void)addNewChatMessageWithCoordinate:(CLLocationCoordinate2D)coordinate;
 
+- (void)createThumbnailForChatMessageAtIndexPath:(NSIndexPath *)indexPath withSize:(CGSize)size andCompletion:(FetchImageCompletionHandler)handler;
+- (UIImage *)resizeImage:(UIImage *)image toSize:(CGSize)newSize;
+
 @end
 
 NS_ASSUME_NONNULL_END

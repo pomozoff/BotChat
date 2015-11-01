@@ -32,7 +32,10 @@ static NSUInteger const kLowPriority = 250;
     [self setupAppearanceForChatMessage:chatMessage];
 }
 - (void)updateImage:(UIImage *)image {
-    self.chatImageView.image = image != nil ? image : [UIImage imageNamed:@"placeholder"];
+    UIImage *newImage = image != nil ? image : [UIImage imageNamed:@"placeholder"];
+    if (self.chatImageView.image != newImage) {
+        self.chatImageView.image = newImage;
+    }
 }
 
 #pragma mark - Lifecycle

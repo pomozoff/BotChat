@@ -128,7 +128,7 @@
                                             <action selector="geoButtonTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Spz-4u-gXR"/>
                                         </connections>
                                     </button>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="pRw-PZ-zFD" userLabel="User Input Text View">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="750" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="pRw-PZ-zFD" userLabel="User Input Text View">
                                         <rect key="frame" x="86" y="8" width="457" height="37"/>
                                         <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

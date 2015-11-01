@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ChatTableViewCell : UITableViewCell
 
 - (void)updateWithChatMessage:(id <ChatMessage>)chatMessage;
+- (void)updateImage:(UIImage *)image;
 
 @end
 

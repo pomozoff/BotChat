@@ -68,7 +68,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             __strong __typeof(weakSelf) strongSelf = weakSelf;
             [strongSelf.tableView endUpdates];
-            [strongSelf scrollMessages:ScrollDirectionDown];
+            //[strongSelf scrollMessages:ScrollDirectionDown];
         });
     };
 }
@@ -111,6 +111,9 @@
           forChangeType:(TableChangeType)type
            newIndexPath:(NSIndexPath *)newIndexPath
 {
+    if (!newIndexPath) {
+        return;
+    }
     __weak __typeof(self) weakSelf = self;
     switch(type) {
         case TableChangeInsert: {
@@ -149,6 +152,7 @@
 }
 
 - (void)scrollMessages:(ScrollDirection)scrollDirection {
+    /*
     //NSLog(@"Scrolling %@", scrollDirection == ScrollDirectionUp ? @"up" : @"down");
     NSInteger sectionsNumber = [self.tableDataSource numberOfSections];
     NSInteger rowsNumber = [self.tableDataSource numberOfItemsInSection:sectionsNumber - 1];
@@ -161,6 +165,7 @@
                                       atScrollPosition:scrollPosition animated:YES];
         });
     }
+    */
 }
 
 @end

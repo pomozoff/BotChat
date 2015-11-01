@@ -14,6 +14,7 @@ static NSUInteger const kBatchSize = 20;
 static NSString * const kSortColumnDate = @"date";
 static NSString * const kSortColumnIncoming = @"incoming";
 static NSString * const kChatMessageEntityName = @"ChatMessage";
+static NSString * const kImageEntityName = @"Image";
 
 @interface ChatManager()
 
@@ -49,8 +50,19 @@ static NSString * const kChatMessageEntityName = @"ChatMessage";
 - (void)addNewChatMessageWithImage:(UIImage *)image {
     ChatMessage *outgoingChatMessage = [self addManagedObjectWithEntityName:kChatMessageEntityName];
     outgoingChatMessage.hasImage = [NSNumber numberWithBool:YES];
-    //outgoingChatMessage.image.image = UIImagePNGRepresentation(image);
-    [self processOutgoingChatMessage:outgoingChatMessage];
+    
+    __weak __typeof(self) weakSelf = self;
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
+        CGSize newSize = CGSizeMake(image.size.width / 2, image.size.height / 2);
+        NSData *data = UIImageJPEGRepresentation([self resizeImage:image toSize:newSize], 0.5);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            outgoingChatMessage.image = [self addManagedObjectWithEntityName:kImageEntityName];
+            outgoingChatMessage.image.image = data;
+            [weakSelf processOutgoingChatMessage:outgoingChatMessage];
+        });
+    });
+
 }
 - (void)addNewChatMessageWithCoordinate:(CLLocationCoordinate2D)coordinate {
     ChatMessage *outgoingChatMessage = [self addManagedObjectWithEntityName:kChatMessageEntityName];
@@ -58,6 +70,34 @@ static NSString * const kChatMessageEntityName = @"ChatMessage";
     outgoingChatMessage.latitude = [NSNumber numberWithDouble:coordinate.latitude];
     outgoingChatMessage.longitude = [NSNumber numberWithDouble:coordinate.longitude];
     [self processOutgoingChatMessage:outgoingChatMessage];
+}
+- (void)createThumbnailForChatMessageAtIndexPath:(NSIndexPath *)indexPath withSize:(CGSize)size andCompletion:(FetchImageCompletionHandler)handler {
+    __weak __typeof(self) weakSelf = self;
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
+        __strong __typeof(weakSelf) strongSelf = weakSelf;
+        UIImage *image = nil;
+        ChatMessage *chatMessage = [strongSelf.dataSource objectAtIndexPath:indexPath];
+        if ([chatMessage.hasImage boolValue]) {
+            image = [strongSelf resizeImage:[UIImage imageWithData:chatMessage.image.image] toSize:size];
+            chatMessage.thumbnail = UIImageJPEGRepresentation(image, 0.5);
+            handler(image, nil);
+        } else if ([chatMessage.hasLocation boolValue]) {
+            [strongSelf.locationDataSource makeImageLocationForChatMessage:[ChatMessageDecorator decoratedInstanceOf:chatMessage]
+                                                             forSize:size
+                                                      withCompletion:^(UIImage * _Nullable image, NSError * _Nullable error) {
+                                                          chatMessage.thumbnail = UIImageJPEGRepresentation(image, 0.5);
+                                                          handler(image, error);
+                                                      }];
+        }
+    });
+}
+- (UIImage *)resizeImage:(UIImage *)image toSize:(CGSize)newSize {
+    CGFloat scale = newSize.width / image.size.width;
+    UIImage *scaledImage = [UIImage imageWithCGImage:[image CGImage]
+                                               scale:(image.scale * scale)
+                                         orientation:image.imageOrientation];
+    return scaledImage;
 }
 
 #pragma mark - Private
@@ -73,7 +113,7 @@ static NSString * const kChatMessageEntityName = @"ChatMessage";
                                                                                      cacheName:nil];
     return frc;
 }
-- (ChatMessage *)addManagedObjectWithEntityName:(NSString *)entityName {
+- (id)addManagedObjectWithEntityName:(NSString *)entityName {
     return [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:self.dataStore.addQueueManagedObjectContext];
 }
 - (ChatMessage *)duplicateMessage:(ChatMessage *)chatMessage {

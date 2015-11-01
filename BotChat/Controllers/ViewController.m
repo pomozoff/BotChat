@@ -19,6 +19,7 @@ static NSString * const kCellReuseIdentifier = @"Chat Table Cell";
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *maxInputTextViewConstraint;
 
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
+@property (nonatomic, strong) UIImage *placeholder;
 
 @end
 
@@ -32,6 +33,12 @@ static NSString * const kCellReuseIdentifier = @"Chat Table Cell";
         _imagePickerController.delegate = self;
     }
     return _imagePickerController;
+}
+- (UIImage *)placeholder {
+    if (!_placeholder) {
+        _placeholder = [UIImage imageNamed:@"placeholder"];
+    }
+    return _placeholder;
 }
 
 #pragma mark - Lifecycle
@@ -60,14 +67,14 @@ static NSString * const kCellReuseIdentifier = @"Chat Table Cell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ChatTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellReuseIdentifier forIndexPath:indexPath];
     [self updateCell:cell atIndexPath:indexPath];
-    
     return cell;
 }
 
 #pragma mark - Table view delegate
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    return UITableViewAutomaticDimension;
+    id <ChatMessage> chatMessage = [self.chatManager objectAtIndexPath:indexPath];
+    return chatMessage.isTextMessage ? UITableViewAutomaticDimension : self.placeholder.size.height;
 }
 
 #pragma mark - Text view delegate
@@ -95,8 +102,8 @@ static NSString * const kCellReuseIdentifier = @"Chat Table Cell";
     NSString *text = [self processTextToSend];
 
     self.inputTextView.text = @"";
+    self.inputTextView.scrollEnabled = NO;
     [self updateSendButtonState];
-    [self updateUserInputTextViewState:self.inputTextView];
     [self.inputTextView updateConstraints];
 
     [self.chatManager addNewChatMessageWithText:text];
@@ -115,10 +122,23 @@ static NSString * const kCellReuseIdentifier = @"Chat Table Cell";
 - (void)updateCell:(ChatTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     id <ChatMessage> chatMessage = [self.chatManager objectAtIndexPath:indexPath];
     [cell updateWithChatMessage:chatMessage];
+
+    if (!chatMessage.isTextMessage && !chatMessage.thumbnail) {
+        __weak __typeof(self) weakSelf = self;
+        [self.chatManager createThumbnailForChatMessageAtIndexPath:indexPath withSize:self.placeholder.size andCompletion:^(UIImage * _Nullable image, NSError * _Nullable error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                ChatTableViewCell *oldChatCell = [weakSelf.tableView cellForRowAtIndexPath:indexPath];
+                [oldChatCell updateImage:image];
+            });
+        }];
+    }
 }
 - (NSString *)processTextToSend {
     NSString *trimmedText = [self.inputTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     return trimmedText;
+}
+- (CGSize)placeholderSize {
+    return self.placeholder.size;
 }
 
 #pragma mark - Private keyboard
