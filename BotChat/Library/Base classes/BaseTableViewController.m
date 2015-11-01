@@ -42,6 +42,17 @@
 
 - (void)reloadData {
     [self.tableView reloadData];
+
+    [CATransaction begin];
+    [self.tableView beginUpdates];
+
+    __weak __typeof(self) weakSelf = self;
+    [CATransaction setCompletionBlock: ^{
+        [weakSelf scrollMessages:ScrollDirectionDown];
+    }];
+    
+    [self.tableView endUpdates];
+    [CATransaction commit];
 }
 - (void)reloadDataInSections:(NSIndexSet *)indexSet {
     NSAssert([NSThread isMainThread], @"Not in main thread!");
