@@ -60,15 +60,14 @@
 }
 - (void)willChangeContent {
     NSAssert([NSThread isMainThread], @"Not in main thread!");
+
     [self.tableView beginUpdates];
     self.updateOperation = [[NSBlockOperation alloc] init];
-    
+
     __weak __typeof(self) weakSelf = self;
     self.updateOperation.completionBlock = ^{
         dispatch_async(dispatch_get_main_queue(), ^{
-            __strong __typeof(weakSelf) strongSelf = weakSelf;
-            [strongSelf.tableView endUpdates];
-            //[strongSelf scrollMessages:ScrollDirectionDown];
+            [weakSelf.tableView endUpdates];
         });
     };
 }
@@ -148,20 +147,26 @@
 }
 
 - (void)scrollMessages:(ScrollDirection)scrollDirection {
-    /*
-    //NSLog(@"Scrolling %@", scrollDirection == ScrollDirectionUp ? @"up" : @"down");
     NSInteger sectionsNumber = [self.tableDataSource numberOfSections];
-    NSInteger rowsNumber = [self.tableDataSource numberOfItemsInSection:sectionsNumber - 1];
-    if (sectionsNumber > 0 && rowsNumber > 0) {
-        NSInteger rowIndex = scrollDirection == ScrollDirectionUp ? 0 : rowsNumber - 1;
-        UITableViewScrollPosition scrollPosition = scrollDirection == ScrollDirectionUp ? UITableViewScrollPositionTop : UITableViewScrollPositionBottom;
-        __weak __typeof(self) weakSelf = self;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:rowIndex inSection:sectionsNumber - 1]
-                                      atScrollPosition:scrollPosition animated:YES];
-        });
+    if (sectionsNumber > 0) {
+        NSInteger rowsNumber = [self.tableDataSource numberOfItemsInSection:sectionsNumber - 1];
+        if (rowsNumber > 0) {
+            NSLog(@"Scrolling %@", scrollDirection == ScrollDirectionUp ? @"up" : @"down");
+
+            NSInteger rowIndex = scrollDirection == ScrollDirectionUp ? 0 : rowsNumber - 1;
+            UITableViewScrollPosition scrollPosition = scrollDirection == ScrollDirectionUp ? UITableViewScrollPositionTop : UITableViewScrollPositionBottom;
+            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:rowIndex inSection:sectionsNumber - 1];
+
+            CGPoint offset = self.tableView.contentOffset;
+            [self.tableView beginUpdates];
+            [self.tableView endUpdates];
+            
+            [self.tableView.layer removeAllAnimations];
+            [self.tableView setContentOffset:offset animated:NO];
+            
+            [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:scrollPosition animated:YES];
+        }
     }
-    */
 }
 
 @end
