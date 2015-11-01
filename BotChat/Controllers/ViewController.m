@@ -58,6 +58,7 @@ static NSString * const kCellReuseIdentifier = @"Chat Table Cell";
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     self.imagePickerController = nil;
+    self.images = nil;
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
