@@ -156,6 +156,15 @@ static NSString * const kDataBaseManagerErrorDomain = @"CoreDataStoreErrorDomain
         }
     }];
 }
+- (void)saveNewObjectsWithCompletion:(CompletionHandler)handler {
+    if (self.addQueueManagedObjectContext.hasChanges) {
+        NSError *error = nil;
+        BOOL isSaved = [self.addQueueManagedObjectContext save:&error];
+        if (handler) {
+            handler(isSaved, error);
+        }
+    }
+}
 
 #pragma mark - Private
 

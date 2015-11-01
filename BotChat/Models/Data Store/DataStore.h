@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setupWithCompletion:(CompletionHandler)handler;
 - (void)saveDataWithCompletion:(CompletionHandler)handler;
+- (void)saveNewObjectsWithCompletion:(CompletionHandler)handler;
 
 @end
 
