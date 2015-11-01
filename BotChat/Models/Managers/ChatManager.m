@@ -43,60 +43,69 @@ static NSString * const kImageEntityName = @"Image";
     return [ChatMessageDecorator decoratedInstanceOf:chatMessage];
 }
 - (void)addNewChatMessageWithText:(NSString *)text {
-    ChatMessage *outgoingChatMessage = [self addManagedObjectWithEntityName:kChatMessageEntityName];
-    outgoingChatMessage.text = text;
-    [self processOutgoingChatMessage:outgoingChatMessage];
+    __weak __typeof(self) weakSelf = self;
+    [self addManagedObjectWithEntityName:kChatMessageEntityName withOperation:^(NSManagedObject *object) {
+        ChatMessage *outgoingChatMessage = (ChatMessage *)object;
+        outgoingChatMessage.text = text;
+        [weakSelf processOutgoingChatMessage:outgoingChatMessage];
+    }];
 }
 - (void)addNewChatMessageWithImage:(UIImage *)image {
-    ChatMessage *outgoingChatMessage = [self addManagedObjectWithEntityName:kChatMessageEntityName];
-    outgoingChatMessage.hasImage = [NSNumber numberWithBool:YES];
-    
     __weak __typeof(self) weakSelf = self;
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_async(queue, ^{
-        CGSize newSize = CGSizeMake(image.size.width / 2, image.size.height / 2);
-        NSData *data = UIImageJPEGRepresentation([self resizeImage:image toSize:newSize], 0.5);
-        dispatch_async(dispatch_get_main_queue(), ^{
-            outgoingChatMessage.image = [self addManagedObjectWithEntityName:kImageEntityName];
-            outgoingChatMessage.image.image = data;
-            [weakSelf processOutgoingChatMessage:outgoingChatMessage];
-        });
-    });
-
+    [self addManagedObjectWithEntityName:kChatMessageEntityName withOperation:^(NSManagedObject *object) {
+        __strong __typeof(weakSelf) strongSelf = weakSelf;
+        ChatMessage *outgoingChatMessage = (ChatMessage *)object;
+        outgoingChatMessage.hasImage = [NSNumber numberWithBool:YES];
+        outgoingChatMessage.image = [NSEntityDescription insertNewObjectForEntityForName:kImageEntityName
+                                                                  inManagedObjectContext:strongSelf.dataStore.addQueueManagedObjectContext];
+        outgoingChatMessage.image.image = UIImageJPEGRepresentation(image, 1.0f);
+        [strongSelf processOutgoingChatMessage:outgoingChatMessage];
+}];
 }
 - (void)addNewChatMessageWithCoordinate:(CLLocationCoordinate2D)coordinate {
-    ChatMessage *outgoingChatMessage = [self addManagedObjectWithEntityName:kChatMessageEntityName];
-    outgoingChatMessage.hasLocation = [NSNumber numberWithBool:YES];
-    outgoingChatMessage.latitude = [NSNumber numberWithDouble:coordinate.latitude];
-    outgoingChatMessage.longitude = [NSNumber numberWithDouble:coordinate.longitude];
-    [self processOutgoingChatMessage:outgoingChatMessage];
-}
-- (void)createThumbnailForChatMessageAtIndexPath:(NSIndexPath *)indexPath withSize:(CGSize)size andCompletion:(FetchImageCompletionHandler)handler {
     __weak __typeof(self) weakSelf = self;
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_async(queue, ^{
+    [self addManagedObjectWithEntityName:kChatMessageEntityName withOperation:^(NSManagedObject *object) {
+        ChatMessage *outgoingChatMessage = (ChatMessage *)object;
+        outgoingChatMessage.hasLocation = [NSNumber numberWithBool:YES];
+        outgoingChatMessage.latitude = [NSNumber numberWithDouble:coordinate.latitude];
+        outgoingChatMessage.longitude = [NSNumber numberWithDouble:coordinate.longitude];
+        [weakSelf processOutgoingChatMessage:outgoingChatMessage];
+    }];
+}
+- (void)thumbnailForChatMessageAtIndexPath:(NSIndexPath *)indexPath withSize:(CGSize)size andCompletion:(FetchImageCompletionHandler)handler {
+    ChatMessage *chatMessageInMainQueue = [self.dataSource objectAtIndexPath:indexPath];
+    NSManagedObjectID *objectID = chatMessageInMainQueue.objectID;
+
+    __weak __typeof(self) weakSelf = self;
+    [self.dataStore.addQueueManagedObjectContext performBlock:^{
         __strong __typeof(weakSelf) strongSelf = weakSelf;
         UIImage *image = nil;
-        ChatMessage *chatMessage = [strongSelf.dataSource objectAtIndexPath:indexPath];
+        ChatMessage *chatMessage = [self.dataStore.addQueueManagedObjectContext objectWithID:objectID];
         if ([chatMessage.hasImage boolValue]) {
-            image = [strongSelf resizeImage:[UIImage imageWithData:chatMessage.image.image] toSize:size];
-            chatMessage.thumbnail = UIImageJPEGRepresentation(image, 0.5);
+            UIImage *bigImage = [UIImage imageWithData:chatMessage.image.image];
+            image = [strongSelf resizeImage:bigImage toSize:size];
             handler(image, nil);
+            chatMessage.thumbnail = UIImageJPEGRepresentation(image, 1.0f);
+            [self saveNewMessages];
         } else if ([chatMessage.hasLocation boolValue]) {
             [strongSelf.locationDataSource makeImageLocationForChatMessage:[ChatMessageDecorator decoratedInstanceOf:chatMessage]
-                                                             forSize:size
-                                                      withCompletion:^(UIImage * _Nullable image, NSError * _Nullable error) {
-                                                          chatMessage.thumbnail = UIImageJPEGRepresentation(image, 0.5);
-                                                          handler(image, error);
-                                                      }];
+                                                                   forSize:size
+                                                            withCompletion:^(UIImage * _Nullable image, NSError * _Nullable error)
+             {
+                 handler(image, nil);
+                 [self.dataStore.addQueueManagedObjectContext performBlock:^{
+                     chatMessage.thumbnail = UIImageJPEGRepresentation(image, 1.0f);
+                     [self saveNewMessages];
+                 }];
+             }];
         }
-    });
+    }];
 }
 - (UIImage *)resizeImage:(UIImage *)image toSize:(CGSize)newSize {
-    CGFloat scale = newSize.width / image.size.width;
-    UIImage *scaledImage = [UIImage imageWithCGImage:[image CGImage]
-                                               scale:(image.scale * scale)
-                                         orientation:image.imageOrientation];
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0f);
+    [image drawInRect:CGRectMake(0.0f, 0.0f, newSize.width, newSize.height)];
+    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
     return scaledImage;
 }
 
@@ -113,12 +122,15 @@ static NSString * const kImageEntityName = @"Image";
                                                                                      cacheName:nil];
     return frc;
 }
-- (id)addManagedObjectWithEntityName:(NSString *)entityName {
-    return [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:self.dataStore.addQueueManagedObjectContext];
+- (void)addManagedObjectWithEntityName:(NSString *)entityName withOperation:(void(^)(NSManagedObject *object))block {
+    [self.dataStore.addQueueManagedObjectContext performBlock:^{
+        NSManagedObject *object = [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:self.dataStore.addQueueManagedObjectContext];
+        block(object);
+    }];
 }
 - (ChatMessage *)duplicateMessage:(ChatMessage *)chatMessage {
-    ChatMessage *newChatMessage = [self addManagedObjectWithEntityName:kChatMessageEntityName];
-    
+    ChatMessage *newChatMessage = [NSEntityDescription insertNewObjectForEntityForName:kChatMessageEntityName
+                                                                inManagedObjectContext:self.dataStore.addQueueManagedObjectContext];
     for (NSAttributeDescription *attribute in chatMessage.entity.properties) {
         if([attribute isKindOfClass:[NSAttributeDescription class]]) {
             id value = [chatMessage valueForKey:attribute.name];
@@ -130,13 +142,11 @@ static NSString * const kImageEntityName = @"Image";
 
     return newChatMessage;
 }
-- (void)saveMessages {
-    [self.dataStore.addQueueManagedObjectContext performBlock:^{
-    NSError *error;
-    [self.dataStore.addQueueManagedObjectContext save:&error];
-    if (error) {
-        NSLog(@"Save messages failed: %@", error);
-    }
+- (void)saveNewMessages {
+    [self.dataStore saveNewObjectsWithCompletion:^(BOOL succeeded, NSError * __nullable error) {
+        if (!succeeded && error) {
+            NSLog(@"Save messages failed: %@", error);
+        }
     }];
 }
 - (void)processOutgoingChatMessage:(ChatMessage *)outgoingChatMessage {
@@ -147,7 +157,7 @@ static NSString * const kImageEntityName = @"Image";
     incomingChatMessage.incoming = [NSNumber numberWithBool:YES];
     incomingChatMessage.date = [NSDate date];
     
-    [self saveMessages];
+    [self saveNewMessages];
 }
 
 #pragma mark - Callback handlers

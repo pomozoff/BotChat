@@ -20,6 +20,7 @@ static NSString * const kCellReuseIdentifier = @"Chat Table Cell";
 
 @property (nonatomic, strong) UIImagePickerController *imagePickerController;
 @property (nonatomic, strong) UIImage *placeholder;
+@property (nonatomic, strong) NSMutableDictionary <NSNumber *, UIImage *> *images;
 
 @end
 
@@ -39,6 +40,12 @@ static NSString * const kCellReuseIdentifier = @"Chat Table Cell";
         _placeholder = [UIImage imageNamed:@"placeholder"];
     }
     return _placeholder;
+}
+- (NSMutableDictionary *)images {
+    if (!_images) {
+        _images = [[NSMutableDictionary alloc] init];
+    }
+    return _images;
 }
 
 #pragma mark - Lifecycle
@@ -66,15 +73,18 @@ static NSString * const kCellReuseIdentifier = @"Chat Table Cell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ChatTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellReuseIdentifier forIndexPath:indexPath];
-    [self updateCell:cell atIndexPath:indexPath];
+    id <ChatMessage> chatMessage = [self.chatManager objectAtIndexPath:indexPath];
+    [(ChatTableViewCell *)cell updateWithChatMessage:chatMessage];
     return cell;
 }
 
 #pragma mark - Table view delegate
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    id <ChatMessage> chatMessage = [self.chatManager objectAtIndexPath:indexPath];
-    return chatMessage.isTextMessage ? UITableViewAutomaticDimension : self.placeholder.size.height;
+    return UITableViewAutomaticDimension;
+}
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self updateCell:(ChatTableViewCell *)cell atIndexPath:indexPath];
 }
 
 #pragma mark - Text view delegate
@@ -121,16 +131,31 @@ static NSString * const kCellReuseIdentifier = @"Chat Table Cell";
 
 - (void)updateCell:(ChatTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     id <ChatMessage> chatMessage = [self.chatManager objectAtIndexPath:indexPath];
-    [cell updateWithChatMessage:chatMessage];
-
-    if (!chatMessage.isTextMessage && !chatMessage.thumbnail) {
-        __weak __typeof(self) weakSelf = self;
-        [self.chatManager createThumbnailForChatMessageAtIndexPath:indexPath withSize:self.placeholder.size andCompletion:^(UIImage * _Nullable image, NSError * _Nullable error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                ChatTableViewCell *oldChatCell = [weakSelf.tableView cellForRowAtIndexPath:indexPath];
-                [oldChatCell updateImage:image];
-            });
-        }];
+    if (!chatMessage.isTextMessage) {
+        NSNumber *indexOfRow = [NSNumber numberWithInteger:indexPath.row];
+        UIImage *image = self.images[indexOfRow];
+        if (!image) {
+            image = chatMessage.thumbnail;
+            if (!image) {
+                [self.chatManager thumbnailForChatMessageAtIndexPath:indexPath
+                                                            withSize:self.placeholder.size
+                                                       andCompletion:^(UIImage * _Nullable image, NSError * _Nullable error)
+                {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        if (image && !error) {
+                            self.images[indexOfRow] = image;
+                        } else {
+                            NSLog(@"Error getting thumbnail for image: %@", error);
+                        }
+                    });
+                }];
+            } else {
+                self.images[indexOfRow] = image;
+            }
+        }
+        if (image) {
+            [cell updateImage:image];
+        }
     }
 }
 - (NSString *)processTextToSend {

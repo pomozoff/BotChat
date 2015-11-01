@@ -61,13 +61,24 @@
 - (void)willChangeContent {
     NSAssert([NSThread isMainThread], @"Not in main thread!");
 
+    CGPoint offset = self.tableView.contentOffset;
     [self.tableView beginUpdates];
     self.updateOperation = [[NSBlockOperation alloc] init];
 
     __weak __typeof(self) weakSelf = self;
     self.updateOperation.completionBlock = ^{
         dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf.tableView endUpdates];
+            __strong __typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf.tableView endUpdates];
+            
+            [strongSelf.tableView.layer removeAllAnimations];
+            [strongSelf.tableView setContentOffset:offset animated:NO];
+
+            
+            NSInteger sectionsNumber = [strongSelf.tableDataSource numberOfSections];
+            NSInteger rowsNumber = [strongSelf.tableDataSource numberOfItemsInSection:sectionsNumber - 1];
+            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:rowsNumber - 1 inSection:sectionsNumber - 1];
+            [strongSelf.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         });
     };
 }

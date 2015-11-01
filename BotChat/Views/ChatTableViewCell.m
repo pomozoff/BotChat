@@ -21,9 +21,20 @@ static NSUInteger const kLowPriority = 250;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *leadingBubbleViewConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *aspectImageViewConstraint;
 
+@property (nonatomic, strong) UIImage *placeholder;
+
 @end
 
 @implementation ChatTableViewCell
+
+#pragma mark - Properties
+
+- (UIImage *)placeholder {
+    if (!_placeholder) {
+        _placeholder = [UIImage imageNamed:@"placeholder"];
+    }
+    return _placeholder;
+}
 
 #pragma mark - Public
 
@@ -32,9 +43,10 @@ static NSUInteger const kLowPriority = 250;
     [self setupAppearanceForChatMessage:chatMessage];
 }
 - (void)updateImage:(UIImage *)image {
-    UIImage *newImage = image != nil ? image : [UIImage imageNamed:@"placeholder"];
+    UIImage *newImage = image != nil ? image : self.placeholder;
     if (self.chatImageView.image != newImage) {
         self.chatImageView.image = newImage;
+        //[self updateConstraints];
     }
 }
 
@@ -45,6 +57,12 @@ static NSUInteger const kLowPriority = 250;
     self.bubbleView.layer.cornerRadius = 10.0f;
     self.bubbleView.layer.masksToBounds = YES;
 }
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    self.chatImageView.image = self.placeholder;
+    self.chatTextLabel.text = @"";
+    [self updateConstraints];
+}
 
 #pragma mark - Private
 
@@ -54,7 +72,6 @@ static NSUInteger const kLowPriority = 250;
         self.chatImageView.image = nil;
     } else {
         self.chatTextLabel.text = @"";
-        [self updateImage:chatMessage.thumbnail];
     }
     self.chatImageView.hidden = chatMessage.isTextMessage;
 }

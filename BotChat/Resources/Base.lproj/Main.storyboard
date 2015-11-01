@@ -21,7 +21,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8Tb-cR-Vie" userLabel="Chat Table View">
-                                <rect key="frame" x="0.0" y="20" width="600" height="527"/>
+                                <rect key="frame" x="0.0" y="20" width="600" height="531"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -91,10 +91,10 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NOP-jO-49y" userLabel="User Input View">
-                                <rect key="frame" x="0.0" y="547" width="600" height="53"/>
+                                <rect key="frame" x="0.0" y="551" width="600" height="49"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SBa-Q6-nQg">
-                                        <rect key="frame" x="547" y="15" width="53" height="30"/>
+                                        <rect key="frame" x="547" y="8" width="53" height="33"/>
                                         <animations/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="53" id="qlB-rR-fDr"/>
@@ -106,7 +106,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8kw-rs-58C" userLabel="Image Button">
-                                        <rect key="frame" x="8" y="9" width="36" height="36"/>
+                                        <rect key="frame" x="8" y="5" width="36" height="36"/>
                                         <animations/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="36" id="51i-GX-JLk"/>
@@ -118,7 +118,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yUU-8m-SFn" userLabel="Geo Button">
-                                        <rect key="frame" x="46" y="9" width="36" height="36"/>
+                                        <rect key="frame" x="46" y="5" width="36" height="36"/>
                                         <animations/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="yUU-8m-SFn" secondAttribute="height" multiplier="1:1" id="doh-IW-YCJ"/>
@@ -129,7 +129,7 @@
                                         </connections>
                                     </button>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="750" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="pRw-PZ-zFD" userLabel="User Input Text View">
-                                        <rect key="frame" x="86" y="8" width="457" height="37"/>
+                                        <rect key="frame" x="86" y="8" width="457" height="33"/>
                                         <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -160,7 +160,7 @@
                                 </constraints>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jCI-Dk-c22">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="547"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
